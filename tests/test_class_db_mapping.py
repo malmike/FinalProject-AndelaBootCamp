@@ -12,26 +12,27 @@
 from unittest import TestCase
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from app.entity_classes.base import *
 
 def setup_module():
-    global transaction, connection, engine
+    global engine
     #Connect to a database and create a schema using a transaction
     engine = create_engine("sqlite://")
-    transaction = engine.connect()
-    connection = transaction.begin()
-    Base.metadata.create_all(connection)
+    Base.metadata.create_all(engine)
 
-def teardown_module():
-    #Rollback the top level transaction and disconnect from the database
-    connection.Rollback()
-    transaction.close()
-    engine.dispose()
 
 class DatabaseTest(TestCase):
-    def setup():
-        self.__transaction = connection.begin_nested()
-        self.session = Session(connection)
-    def teardown():
-        self.session.close()
-        self.__transaction.Rollback()
-
+    def setUp(self):
+        self.session = Session(bind=engine)
+    def tearDown(self):
+        self.session.rollback()
+    def room_test(self):
+        room = Room(name='orange', capacity=6, description='LIVINGSPACE')
+        self.session.add(room)
+        test_table_room = room in self.session
+        self.assertTrue(test_table_room, "Room not added to the sqlalchemy session")
+        self.session.commit()
+        item = room.name
+        self.assertEqual('orange', item, "The room has not been commited to the database")
+        num_db_entries = self.session.query(Room).filter(Room.name=='orange').count()
+        self.assertEqual(1, num_db_entries, "Multiple entries of room are existing in the database")
