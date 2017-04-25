@@ -36,3 +36,14 @@ class DatabaseTest(TestCase):
         self.assertEqual('orange', item, "The room has not been commited to the database")
         num_db_entries = self.session.query(Room).filter(Room.name=='orange').count()
         self.assertEqual(1, num_db_entries, "Multiple entries of room are existing in the database")
+
+    def person_test(self):
+        person = Person(name='malmike', position='FELLOW')
+        self.session.add(person)
+        test_table_person = person in self.session
+        self.assertTrue(test_table_person, "Person not added to the sqlalchemy session")
+        self.session.commit()
+        item = person.name
+        self.assertEqual('malmike', item, "The person has not been commited to the database")
+        num_db_entries = self.session.query(Room).filter(Room.name=='malmike').count()
+        self.assertEqual(1, num_db_entries, "Multiple entries of person are existing in the database")
