@@ -13,6 +13,7 @@ from unittest import TestCase
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from app.entity_classes.base import *
+from app.entity_classes.room import Room
 
 def setup_module():
     global engine
@@ -47,3 +48,5 @@ class DatabaseTest(TestCase):
         self.assertEqual('malmike', item, "The person has not been commited to the database")
         num_db_entries = self.session.query(Room).filter(Room.name=='malmike').count()
         self.assertEqual(1, num_db_entries, "Multiple entries of person are existing in the database")
+
+
