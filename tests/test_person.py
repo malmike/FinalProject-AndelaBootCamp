@@ -7,14 +7,13 @@ class PersonTests(TestCase):
     def setUp(self):
         self.name = 'malmike'
         self.position = 'fellow'
-        self.person = Person(self.name, self.position)
+        self.person = Person(self.name)
         self.fellow = Fellow(self.name)
         self.staff = Staff(self.name)
     def test_person_instance(self):
         self.assertIsInstance(self.person, Person, "Object person is not an instance of class Person")
     def test_person_attributes(self):
         self.assertEqual(self.person.name, self.name, "The value that is passed into name and that returned, do not match")
-        self.assertEqual(self.person.position, self.position, "The value that is passed into position and that returned, do not match")
     def test_fellow_inherits_person(self):
         self.assertTrue(issubclass(Fellow, Person), "Fellow class doesnot inherit from the Person class")
     def test_fellow_is_an_instance_of_Fellow(self):
