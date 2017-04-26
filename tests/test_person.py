@@ -18,3 +18,9 @@ class PersomTests(TestCase):
         self.assertIsInstance(self.fellow, Fellow, "Object fellow is not an instance of the Fellow class")
     def test_fixed_attributes_in_fellow(self):
         self.asserEqual(self.fellow.position, 'FELLOW', "Fellow doesnot contain any attribute position")
+    def test_stuff_inherits_person(self):
+        self.assertTrue(issubclass(Stuff, Persom), "Stuff class doesnot inherit from the Persom class")
+    def test_stuff_is_instance_of_Stuff(self):
+        self.assertIsInstance(self.stuff, Stuff, "Object stuff is not an instance of class Stuff")
+    def test_fixed_attributes_in_stuff(self):
+        self.asserEqual(self.stuff.position, 'STUFF', "Stuff doesnot contain any attribute position")
