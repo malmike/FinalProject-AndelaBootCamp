@@ -5,11 +5,15 @@ class Office(Room):
     #Initialise the attributes of the Office Class
     def __init__(self, name):
         self.allocation_list = []
-        capacity = 6
+        self.capacity = 6
         room_type = "OFFICE"
         #Make call to the base class Room
         super(Office, self).__init__(name, room_type)
     def add_person(self, person):
-        pass
+        if len(self.allocation_list) < self.capacity:
+            self.allocation_list.append(person)
+            return True
+        else:
+            return False
     def get_allocate_len(self):
         pass
