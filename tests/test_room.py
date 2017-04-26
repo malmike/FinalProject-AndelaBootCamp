@@ -1,5 +1,6 @@
 from unittest import TestCase
 from app.models.room import Room
+from app.models.office import Office
 
 class RoomTests(TestCase):
     def setUp(self):
