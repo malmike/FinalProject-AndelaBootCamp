@@ -7,6 +7,10 @@ class Dojo(object):
         self.people_dict = {}
         self.office_dict = {}
         self.living_space_dict = {}
+        self.unallocated_offices = []
+        self.allocated_offices = []
+        self.unallocated_living_space = []
+        self.allocated_living_space = []
     def create_room(self, room_name, room_type):
         if isinstance(room_name, str) and isinstance(room_type, str):
             if room_type == "office" and room_name not in self.office_dict:
