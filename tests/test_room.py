@@ -7,7 +7,7 @@ class RoomTests(TestCase):
         self.room_type = 'office'
         self.room = Room(self.name, self.capacity, self.room_type)
         self.office = Office(self.name)
-        self.living_space = LinvingSpace(self.name)
+        self.living_space = LivingSpace(self.name)
     def test_room_instance(self):
         self.assertIsInstance(self.room, Room, "Object room is not an instance of class Room")
     def test_room_attributes(self):
@@ -26,7 +26,7 @@ class RoomTests(TestCase):
     def test_living_space_is_instance_of_LivingSpace(self):
         self.assertIsInstance(self.living_space, LivingSpace, "Object living_space is not an instance of class LivingSpace")
     def test_fixed_attributes_in_living_space(self):
-        self.assertEqual(self.living_space.capacity, 6, "LivingSpace doesnot contain any attribute capacity")
+        self.assertEqual(self.living_space.capacity, 4, "LivingSpace doesnot contain any attribute capacity")
         self.asserEqual(self.living_space.type, 'LIVINGSPACE', "LivingSpace doesnot contain any attribute type")
     
     
