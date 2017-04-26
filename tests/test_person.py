@@ -4,22 +4,22 @@ class PersonTests(TestCase):
     def setUp(self):
         self.name = 'malmike'
         self.position = 'fellow'
-        self.person = Persom(self.name, self.position)
+        self.person = Person(self.name, self.position)
         self.fellow = Fellow(self.name)
         self.stuff = Stuff(self.name)
     def test_person_instance(self):
-        self.assertIsInstance(self.person, Persom, "Object person is not an instance of class Persom")
+        self.assertIsInstance(self.person, Person, "Object person is not an instance of class Person")
     def test_person_attributes(self):
         self.assertEqual(self.person.name, self.name, "The value that is passed into name and that returned, do not match")
         self.assertEqual(self.person.position, self.position, "The value that is passed into position and that returned, do not match")
     def test_fellow_inherits_person(self):
-        self.assertTrue(issubclass(Fellow, Persom), "Fellow class doesnot inherit from the Persom class")
+        self.assertTrue(issubclass(Fellow, Person), "Fellow class doesnot inherit from the Person class")
     def test_fellow_is_an_instance_of_Fellow(self):
         self.assertIsInstance(self.fellow, Fellow, "Object fellow is not an instance of the Fellow class")
     def test_fixed_attributes_in_fellow(self):
         self.asserEqual(self.fellow.position, 'FELLOW', "Fellow doesnot contain any attribute position")
     def test_stuff_inherits_person(self):
-        self.assertTrue(issubclass(Stuff, Persom), "Stuff class doesnot inherit from the Persom class")
+        self.assertTrue(issubclass(Stuff, Person), "Stuff class doesnot inherit from the Person class")
     def test_stuff_is_instance_of_Stuff(self):
         self.assertIsInstance(self.stuff, Stuff, "Object stuff is not an instance of class Stuff")
     def test_fixed_attributes_in_stuff(self):
