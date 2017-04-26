@@ -1,4 +1,5 @@
 from unittest import TestCase
+from app.models.person import Person
 
 class PersonTests(TestCase):
     def setUp(self):
