@@ -9,3 +9,5 @@ class LivingSpace(Room):
         room_type = "LIVINGSPACE"
         #Make call to base class Room
         super(LivingSpace, self).__init__(name, room_type)
+    def add_person(self, person):
+        pass
