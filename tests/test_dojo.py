@@ -6,3 +6,8 @@ class DojoTests(TestCase):
         self.dojo = Dojo()
     def test_dojo_is_instance_of_Dojo(self):
         self.assertIsInstance(self.dojo, Dojo, "Object dojo is not an instance of class Dojo")
+    def test_dojo_has_dict_of_rooms(self):
+        self.assertTrue(isinstance(self.room_dict,dict), "Class dojo doesnot contain any dictionary room_dict")
+    def test_dojo_has_dict_of_people(self):
+        self.assertTrue(isinstance(self.people_dict, dict), "Class dojo doesnot contain any dictionary people_dict")
+    
