@@ -8,13 +8,15 @@ from app.models.staff import Staff
 class DojoTests(TestCase):
     def setUp(self):
         self.dojo = Dojo()
-        self.living_space_rooms_names = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h','i','j','k','l','m','n','o']
-        self.office_rooms_names = ['z', 'y', 'x', 'w', 'v', 'u', 't']
-        self.fellows_names = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        self.stuff_names = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+        self.living_space_rooms_names = ['la', 'lb', 'lc', 'ld', 'le', 'lf', 'lg', 'lh','li','lj','lk','ll','lm','ln','lo']
+        self.office_rooms_names = ['oz', 'oy', 'ox', 'ow', 'ov', 'ou', 'ot', 'os', 'or', 'oq']
+        self.fellows_names = ['fa','fb','fc','fd','fe','ff','fg','fh','fi','fj','fk','fl','fm','fn','fo','fp','fq','fr','fs','ft','fu','fv','fw','fx','fy','fz']
+        self.staff_names = ['sa','sb','sc','sd','se','sf','sg','sh','si','sj','sk','sl','sm','sn','so','sp','sq','sr','ss','st','su','sv','sw','sx','sy','sz']
         #Create classes for living space
         self.living_space_rooms = [LivingSpace(x) for x in self.living_space_rooms_names]
+        self.office_rooms = [Office(x) for x in self.office_rooms_names]
         self.list_fellows = [Fellow(x) for x in self.fellows_names]
+        self.list_staffs = [Staff(x) for x in self.staff_names]
         #Assign people to the rooms
         person_index = 0
         self.assigned_living_space = []
@@ -44,33 +46,33 @@ class DojoTests(TestCase):
     def test_add_create_office_and_repeated_room(self):
         #Check whether one office room can be created
         initial_office_count = len(self.dojo.office_dict)
-        blue_office = self.dojo.create_room('Blue', 'office')
+        blue_office = self.dojo.create_room('Blue', 'OFFICE')
         self.assertTrue(blue_office, "Room has not been created")
         new_office_count = len(self.dojo.office_dict)
         self.assertEqual(new_office_count - initial_office_count, 1, "Multiple values are being added to the office dictionary. Why is that!!!")
         #Check whether the same office room can be created
         initial_office_count = len(self.dojo.office_dict)
-        blue_office2 = self.dojo.create_room('Blue', 'office')
+        blue_office2 = self.dojo.create_room('Blue', 'OFFICE')
         self.assertFalse(blue_office2, "Repeated room being created")
         new_office_count = len(self.dojo.office_dict)
         self.assertEqual(new_office_count - initial_office_count, 0, "The value is being added to the office dictionary when it should not")
     def test_add_create_living_space_and_repeated_room(self):
         #Check whether one living space room can be created
         initial_room_count = len(self.dojo.living_space_dict)
-        blue_living_space = self.dojo.create_room('Blue', 'living_space')
+        blue_living_space = self.dojo.create_room('Blue', 'LIVINGSPACE')
         self.assertTrue(blue_living_space, "Room has not been created")
         new_room_count = len(self.dojo.living_space_dict)
         self.assertEqual(new_room_count - initial_room_count, 1, "Multiple values are being added to the living space dictionary. Why is that!!!")
         #Check whether the same living space room can be created
         initial_room_count = len(self.dojo.living_space_dict)
-        blue_living_space2 = self.dojo.create_room('Blue', 'living_space')
+        blue_living_space2 = self.dojo.create_room('Blue', 'LIVINGSPACE')
         self.assertFalse(blue_living_space2, "Repeated room being created")
         new_room_count = len(self.dojo.living_space_dict)
         self.assertEqual(new_room_count - initial_room_count, 0, "The value is being added to the living space dictionary when it should not")
     def test_unallocated_and_allocated_living_space(self):
         initial_office_list_length = len(self.dojo.living_space_dict)  
         for items in self.living_space_rooms_names:
-            self.dojo.create_room(items, "living_space")
+            self.dojo.create_room(items, "LIVINGSPACE")
         self.assertEqual(len(self.living_space_rooms_names), len(self.dojo.living_space_dict)-initial_office_list_length, "Rooms added to the office list do not match the number inserted")
         #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
         person_index = 0
@@ -99,3 +101,19 @@ class DojoTests(TestCase):
         length_of_unassigned_living_space_list = len(self.dojo.unallocated_living_space)
         self.assertEqual(length_of_assigned_living_space_list, len(self.assigned_living_space), "The living space dict was not properly sorted")
         self.assertEqual(length_of_unassigned_living_space_list, len(self.living_space_rooms)-len(self.assigned_living_space), "The living space dict was not properly sorted")
+    def test_add_person(self):
+        #Check whether one person room can be created
+        initial_fellow_count = len(self.dojo.fellow_dict)
+        malmike_fellow = self.dojo.add_person('Male Michael', 'FELLOW')
+        self.assertTrue(malmike_fellow, "Fellow has not been created")
+        new_fellow_count = len(self.dojo.fellow_dict)
+        self.assertEqual(new_fellow_count - initial_office_count, 1, "Multiple values are being added to the fellow dictionary. Why is that!!!")
+        #Check whether the same office room can be created
+        initial_fellow_count = len(self.dojo.fellow_dict)
+        malmike_fellow2 = self.dojo.add_person('Male Michael', 'FELLOW')
+        self.assertFalse(malmike_fellow2, "Repeated fellow being created")
+        new_fellow_count = len(self.dojo.fellow_dict)
+        self.assertEqual(new_fellow_count - initial_fellow_count, 0, "The value is being added to the fellow dictionary when it should not")
+    
+
+
