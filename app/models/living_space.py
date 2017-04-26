@@ -17,3 +17,13 @@ class LivingSpace(Room):
             return False
     def get_allocate_len(self):
         return len(self.allocation_list)
+    def room_assignable(self):
+        if len(self.allocation_list) < self.capacity:
+            return True
+        else:
+            return False
+    def is_room_assignable(self):
+        if len(self.allocation_list) < self.capacity:
+            return True
+        else:
+            return False

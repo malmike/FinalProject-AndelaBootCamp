@@ -17,3 +17,8 @@ class Office(Room):
             return False
     def get_allocate_len(self):
         return len(self.allocation_list)
+    def is_room_assignable(self):
+        if len(self.allocation_list) < self.capacity or not self.allocation_list:
+            return True
+        else:
+            return False
