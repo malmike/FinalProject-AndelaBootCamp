@@ -1,4 +1,5 @@
 from unittest import TestCase
+from app.controller.dojo import Dojo
 
 class DojoTests(TestCase):
     def setUp(self):
