@@ -34,9 +34,8 @@ class RoomTests(TestCase):
         self.assertEqual(self.office.name, self.name, "The value that is passed into name for office object and that returned, do not match")
     def test_fixed_attributes_in_office(self):
         self.assertEqual(self.office.room_type, 'OFFICE', "Office doesnot contain any attribute type")
-    # def test_allocate_list_in_office(self):
-    #     self.assertTrue(isinstance(self.office.allocate_list, list), "There is no list allocate_list in office")
-
+    def test_allocate_list_in_office(self):
+        self.assertTrue(isinstance(self.office.allocate_list, list), "There is no list allocate_list in office")
     def test_allocate_list_values_in_office(self):
         x = 1
         for i in self.person_list:
@@ -54,6 +53,8 @@ class RoomTests(TestCase):
         self.assertEqual(self.living_space.name, self.name, "The value that is passed into name for living_space object and that returned, do not match")
     def test_fixed_attributes_in_living_space(self):
         self.assertEqual(self.living_space.room_type, 'LIVINGSPACE', "LivingSpace doesnot contain any attribute type")
+    def test_allocate_list_in_living_space(self):
+        self.assertTrue(isinstance(self.living_space.allocate_list, list), "There is no list allocate_list in office")
     def test_allocate_list_values_in_living_space(self):
         x = 1
         for i in self.person_list:
