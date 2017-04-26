@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-class PersomTests(TestCase):
+class PersonTests(TestCase):
     def setUp(self):
         self.name = 'malmike'
         self.position = 'fellow'
