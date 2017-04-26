@@ -107,7 +107,7 @@ class DojoTests(TestCase):
         malmike_fellow = self.dojo.add_person('Male Michael', 'FELLOW')
         self.assertTrue(malmike_fellow, "Fellow has not been created")
         new_fellow_count = len(self.dojo.fellow_dict)
-        self.assertEqual(new_fellow_count - initial_office_count, 1, "Multiple values are being added to the fellow dictionary. Why is that!!!")
+        self.assertEqual(new_fellow_count - initial_fellow_count, 1, "Multiple values are being added to the fellow dictionary. Why is that!!!")
         #Check whether the same office room can be created
         initial_fellow_count = len(self.dojo.fellow_dict)
         malmike_fellow2 = self.dojo.add_person('Male Michael', 'FELLOW')
