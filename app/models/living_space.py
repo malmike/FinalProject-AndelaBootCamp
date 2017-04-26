@@ -11,3 +11,5 @@ class LivingSpace(Room):
         super(LivingSpace, self).__init__(name, room_type)
     def add_person(self, person):
         pass
+    def get_allocate_len(self):
+        pass
