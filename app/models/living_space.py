@@ -7,4 +7,4 @@ class LivingSpace(Room):
         capacity = 4
         room_type = "LIVINGSPACE"
         #Make call to base class Room
-        super(LivingSpace, self).__init__(name, capacity, room_type)
+        super(LivingSpace, self).__init__(name, room_type)

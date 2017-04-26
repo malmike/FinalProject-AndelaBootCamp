@@ -7,4 +7,4 @@ class Office(Room):
         capacity = 6
         room_type = "OFFICE"
         #Make call to the base class Room
-        super(Office, self).__init__(name, capacity, room_type)
+        super(Office, self).__init__(name, room_type)
