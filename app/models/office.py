@@ -9,3 +9,5 @@ class Office(Room):
         room_type = "OFFICE"
         #Make call to the base class Room
         super(Office, self).__init__(name, room_type)
+    def add_person(self, person):
+        pass
