@@ -4,6 +4,7 @@ from app.models.room import Room
 class LivingSpace(Room):
     #Initialise the attributes of the LivingSpace Class
     def __init__(self, name):
+        self.allocation_list = []
         capacity = 4
         room_type = "LIVINGSPACE"
         #Make call to base class Room
