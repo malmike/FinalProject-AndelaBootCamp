@@ -1,6 +1,7 @@
 from unittest import TestCase
 from app.models.person import Person
 from app.models.fellow import Fellow
+from app.models.stuff import Stuff
 
 class PersonTests(TestCase):
     def setUp(self):
