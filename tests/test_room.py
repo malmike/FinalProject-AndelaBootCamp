@@ -2,30 +2,29 @@ from unittest import TestCase
 from app.models.room import Room
 from app.models.office import Office
 from app.models.living_space import LivingSpace
-from app.models.person import Person
+from app.models.fellow import Fellow
 
 class RoomTests(TestCase):
     def setUp(self):
         self.name = 'orange'
         self.room_type = 'office'
-        self.room = Room(self.name, self.room_type)
+        self.room = Room(self.name)
         self.office = Office(self.name)
         self.living_space = LivingSpace(self.name)
 
         self.person_list = []
-        self.person_list.append(Person('john', 'FELLOW'))
-        self.person_list.append(Person('peter', 'FELLOW'))
-        self.person_list.append(Person('jackson', 'FELLOW'))
-        self.person_list.append(Person('james', 'FELLOW'))
-        self.person_list.append(Person('luck', 'FELLOW'))
-        self.person_list.append(Person('william', 'FELLOW'))
-        self.person_list.append(Person('kron', 'FELLOW'))
+        self.person_list.append(Fellow('john'))
+        self.person_list.append(Fellow('peter'))
+        self.person_list.append(Fellow('jackson'))
+        self.person_list.append(Fellow('james'))
+        self.person_list.append(Fellow('luck'))
+        self.person_list.append(Fellow('william'))
+        self.person_list.append(Fellow('kron'))
 
     def test_room_instance(self):
         self.assertIsInstance(self.room, Room, "Object room is not an instance of class Room")
     def test_room_attributes(self):
         self.assertEqual(self.room.name, self.name, "The value that is passed into name and that returned, do not match")
-        self.assertEqual(self.room.room_type, self.room_type, "The value that is passed into room_type and that returned, do not match")
     def test_office_inherits_room(self):
         self.assertTrue(issubclass(Office, Room), "Office class doesnot inherit from the Room class")
     def test_office_is_an_instance_of_Office(self):
