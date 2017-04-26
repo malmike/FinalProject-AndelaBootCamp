@@ -1,3 +1,4 @@
 from app.models.person import Person
 class Fellow(Person):
-    pass
+    def __init__(self, name):
+        pass
