@@ -75,6 +75,7 @@ class DojoTests(TestCase):
         #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
         person_index = 0
         test_index = ""
+        count = 0
         for item in self.dojo.living_space_dict: 
             while True:
                 if person_index <= 25:
@@ -84,16 +85,17 @@ class DojoTests(TestCase):
                     else:
                         self.assertEqual(4, self.dojo.living_space_dict[item].get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
                         test_index = item
+                        count += 1
                         break 
                 else:
                     break
             if person_index == 26:
                 break
+        self.assertEqual(count, 6, "The expected number should be 6")
         self.assertEqual(4, self.dojo.living_space_dict[test_index].get_allocate_len(), "Value held by the living space dictionary has not been updated")
 
-        value = self.dojo.sort_allocated_living_space()
-        self.assertTrue(value, "The living space dict was not sorted")
+        self.dojo.sort_allocated_room(self.dojo.living_space_dict, 'LIVINGSPACE')
         length_of_assigned_living_space_list = len(self.dojo.allocated_living_space)
         length_of_unassigned_living_space_list = len(self.dojo.unallocated_living_space)
-        self.assertEqual(length_of_unassigned_living_space_list, len(self.assigned_living_space), "The living space dict was not properly sorted")
+        self.assertEqual(length_of_assigned_living_space_list, len(self.assigned_living_space), "The living space dict was not properly sorted")
         self.assertEqual(length_of_unassigned_living_space_list, len(self.living_space_rooms)-len(self.assigned_living_space), "The living space dict was not properly sorted")
