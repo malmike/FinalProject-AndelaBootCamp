@@ -10,11 +10,23 @@ class DojoTests(TestCase):
         self.assertTrue(isinstance(self.dojo.room_dict,dict), "Class dojo doesnot contain any dictionary room_dict")
     def test_dojo_has_dict_of_people(self):
         self.assertTrue(isinstance(self.dojo.people_dict, dict), "Class dojo doesnot contain any dictionary people_dict")
+    def test_add_room_and_repeated_room(self):
+        #Check whether one room can be created
+        initial_room_count = len(self.dojo.room_dict)
+        blue_office = self.dojo.create_room('Blue', 'office')
+        self.assertTrue(blue_office, "Room has not been created")
+        new_room_count = len(self.dojo.room_dict)
+        self.assertEqual(new_room_count - initial_room_count, 1, "Multiple values are being added to the dictionary. Why is that!!!")
+        #Check whether the same room can be created
+        blue_office2 = self.dojo.create_room('Blue', 'office')
+        self.assertFalse(blue_office2, "Repeated room being created")
+        new_room_count = len(self.dojo.room_dict)
+        self.assertEqual(new_room_count - initial_room_count, 0, "The value is being added to the dictionary when it should not")
     def test_create_room_successfully(self):
         initial_room_count = len(self.dojo.room_dict)
         blue_office = self.dojo.create_room('Blue', 'office')
         self.assertTrue(blue_office)
         new_room_count = len(self.dojo.room_dict)
-        self.assertEqual(new_room_count - initial_room_count, 1)
-
+        self.assertEqual(new_room_count - initial_room_count, 1, "Multiple values are being added to the dictionary. Why is that!!!")
+    
     
