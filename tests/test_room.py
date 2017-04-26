@@ -19,6 +19,8 @@ class RoomTests(TestCase):
         self.assertTrue(issubclass(Office, Room), "Office class doesnot inherit from the Room class")
     def test_office_is_an_instance_of_Office(self):
         self.assertIsInstance(self.office, Office, "Object office is not an instance of the Office class")
+    def test_name_attribute_in_office(self):
+        self.assertEqual(self.office.name, self.name, "The value that is passed into name for office object and that returned, do not match")
     def test_fixed_attributes_in_office(self):
         self.assertEqual(self.office.capacity, 6, "Office doesnot contain any attribute capacity")
         self.asserEqual(self.office.type, 'OFFICE', "Office doesnot contain any attribute type")
@@ -26,6 +28,8 @@ class RoomTests(TestCase):
         self.assertTrue(issubclass(LivingSpace, Room), "LivingSpace class doesnot inherit from the Room class")
     def test_living_space_is_instance_of_LivingSpace(self):
         self.assertIsInstance(self.living_space, LivingSpace, "Object living_space is not an instance of class LivingSpace")
+    def test_name_attribute_in_living_space(self):
+        self.assertEqual(self.living_space.name, self.name, "The value that is passed into name for living_space object and that returned, do not match")
     def test_fixed_attributes_in_living_space(self):
         self.assertEqual(self.living_space.capacity, 4, "LivingSpace doesnot contain any attribute capacity")
         self.asserEqual(self.living_space.type, 'LIVINGSPACE', "LivingSpace doesnot contain any attribute type")
