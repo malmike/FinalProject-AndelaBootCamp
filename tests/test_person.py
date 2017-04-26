@@ -12,3 +12,9 @@ class PersomTests(TestCase):
     def test_person_attributes(self):
         self.assertEqual(self.person.name, self.name, "The value that is passed into name and that returned, do not match")
         self.assertEqual(self.person.position, self.position, "The value that is passed into position and that returned, do not match")
+    def test_fellow_inherits_person(self):
+        self.assertTrue(issubclass(Fellow, Persom), "Fellow class doesnot inherit from the Persom class")
+    def test_fellow_is_an_instance_of_Fellow(self):
+        self.assertIsInstance(self.fellow, Fellow, "Object fellow is not an instance of the Fellow class")
+    def test_fixed_attributes_in_fellow(self):
+        self.asserEqual(self.fellow.position, 'FELLOW', "Fellow doesnot contain any attribute position")
