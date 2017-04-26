@@ -20,5 +20,5 @@ class Dojo(object):
             else:
                 return False
         else:
-            return False
+            raise TypeError('Values inserted must both be strings')
                  
