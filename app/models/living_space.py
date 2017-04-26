@@ -16,4 +16,4 @@ class LivingSpace(Room):
         else:
             return False
     def get_allocate_len(self):
-        pass
+        return len(self.allocation_list)
