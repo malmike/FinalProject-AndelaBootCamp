@@ -39,7 +39,7 @@ class RoomTests(TestCase):
     def test_allocate_list_values_in_office(self):
         x = 1
         for i in self.person_list:
-            value = self.office.addPerson(i)
+            value = self.office.add_person(i)
             if x <= 6:
                 self.assertEqual(self.office.get_allocate_len(), x, "The list length in office does not match")
             else:
@@ -58,7 +58,7 @@ class RoomTests(TestCase):
     def test_allocate_list_values_in_living_space(self):
         x = 1
         for i in self.person_list:
-            value = self.living_space.addPerson(i)
+            value = self.living_space.add_person(i)
             if x <= 4:
                 self.assertEqual(self.living_space.get_allocate_len(), x, "The list length in living_space does not match")
             else:
