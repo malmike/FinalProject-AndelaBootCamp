@@ -41,8 +41,10 @@ class RoomTests(TestCase):
         for i in self.person_list:
             value = self.office.add_person(i)
             if x <= 6:
+                self.assertTrue(value, "Person has not been added to room")
                 self.assertEqual(self.office.get_allocate_len(), x, "The list length in office does not match")
             else:
+                self.assertFalse(value, "Room is adding extra people")
                 self.assertFalse(value)
             x += 1
     def test_living_space_inherits_room(self):
@@ -60,9 +62,10 @@ class RoomTests(TestCase):
         for i in self.person_list:
             value = self.living_space.add_person(i)
             if x <= 4:
+                self.assertTrue(value, "Person has not been added to room")
                 self.assertEqual(self.living_space.get_allocate_len(), x, "The list length in living_space does not match")
             else:
-                self.assertFalse(value)
+                self.assertFalse(value, "Room is adding extra people")
             x += 1 
     
     
