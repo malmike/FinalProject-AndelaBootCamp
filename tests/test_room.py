@@ -21,5 +21,12 @@ class RoomTests(TestCase):
     def test_fixed_attributes_in_office(self):
         self.assertEqual(self.office.capacity, 6, "Office doesnot contain any attribute capacity")
         self.asserEqual(self.office.type, 'OFFICE', "Object doesnot contain any attribute type")
+    def test_living_space_inherits_room(self):
+        self.assertTrue(issubclass(LivingSpace, Room), "LivingSpace class doesnot inherit from the Room class")
+    def test_living_space_is_instance_of_LivingSpace(self):
+        self.assertIsInstance(self.living_space, LivingSpace, "Object living_space is not an instance of class LivingSpace")
+    def test_fixed_attributes_in_living_space(self):
+        self.assertEqual(self.living_space.capacity, 6, "LivingSpace doesnot contain any attribute capacity")
+        self.asserEqual(self.living_space.type, 'LIVINGSPACE', "LivingSpace doesnot contain any attribute type")
     
     
