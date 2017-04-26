@@ -1,5 +1,7 @@
 from app.models.office import Office
 from app.models.living_space import LivingSpace
+from app.models.fellow import Fellow
+from app.models.staff import Staff
 
 class Dojo(object):
     
@@ -11,15 +13,31 @@ class Dojo(object):
         self.allocated_offices = []
         self.unallocated_living_space = []
         self.allocated_living_space = []
+        self.fellow_dict = {}
+        self.staff_dict = {}
     def create_room(self, room_name, room_type):
         if isinstance(room_name, str) and isinstance(room_type, str):
-            if room_type == "office" and room_name not in self.office_dict:
+            if room_type == "OFFICE" and room_name not in self.office_dict:
                 office = Office(room_name)
                 self.office_dict[room_name] = office
                 return True
-            elif room_type == "living_space" and room_name not in self.living_space_dict:
+            elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
                 living_space = LivingSpace(room_name)
                 self.living_space_dict[room_name] = living_space
+                return True
+            else:
+                return False
+        else:
+            raise TypeError('Values inserted must both be strings')
+    def add_person(self, person_name, person_type):
+        if isinstance(person_name, str) and isinstance(person_type, str):
+            if person_type == "FELLOW" and person_name not in self.fellow_dict:
+                fellow = Fellow(person_name)
+                self.fellow_dict[person_name] = fellow
+                return True
+            elif person_type == "STAFF" and person_name not in self.staff_dict:
+                staff = Stuff(person_name)
+                self.staff_dict[person_name] = staff
                 return True
             else:
                 return False
