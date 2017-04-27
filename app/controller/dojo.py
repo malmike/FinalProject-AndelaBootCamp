@@ -93,6 +93,7 @@ class Dojo(object):
                     self.allocated_living_space.append(self.unallocated_living_space[index])
                     del self.unallocated_living_space[index]
                 return True
-
+    def find_person(self, person_name, position):
+        pass
             
         
