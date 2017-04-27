@@ -73,13 +73,16 @@ class Dojo(object):
                 index = random.choice(range(len(self.unallocated_offices)))
                 value = self.unallocated_offices[index].add_person(person_object)
                 if not value:
+                    if not self.unallocated_offices[index].is_room_assignable:
+                        self.allocated_offices.append(self.unallocated_offices[index])
+                        del self.unallocated_offices[index]
                     self.allocate_rooms(person_object, room_type)
                 else:
                     self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
                     if not self.unallocated_offices[index].is_room_assignable:
                         self.allocated_offices.append(self.unallocated_offices[index])
                         del self.unallocated_offices[index]
-                    return True
+                return True
             else:
                 self.unallocated_people['OFFICE'] = person_object
                 return False
@@ -88,13 +91,16 @@ class Dojo(object):
                 index = random.choice(range(len(self.unallocated_living_space)))
                 value = self.unallocated_living_space[index].add_person(person_object)
                 if not value:
+                    if not self.unallocated_living_space[index].is_room_assignable:
+                        self.allocated_living_space.append(self.unallocated_living_space[index])
+                        del self.unallocated_living_space[index]
                     self.allocate_rooms(person_object, room_type)
                 else:
                     self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
                     if not self.unallocated_living_space[index].is_room_assignable:
                         self.allocated_living_space.append(self.unallocated_living_space[index])
                         del self.unallocated_living_space[index]
-                    return True
+                return True
             else:
                 self.unallocated_people['LIVINGSPACE'] = person_object
                 return False
