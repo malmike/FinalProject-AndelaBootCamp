@@ -16,6 +16,7 @@ class Dojo(object):
         self.allocated_living_space = []
         self.fellow_dict = {}
         self.staff_dict = {}
+        self.unallocated_people = {}
     def create_room(self, room_name, room_type):
         if isinstance(room_name, str) and isinstance(room_type, str):
             if room_type == "OFFICE" and room_name not in self.office_dict:
@@ -80,6 +81,7 @@ class Dojo(object):
                         del self.unallocated_offices[index]
                     return True
             else:
+                self.unallocated_people['OFFICE'] = person_object
                 return False
         elif room_type is "LIVINGSPACE":
             if len(self.unallocated_living_space) > 0:
@@ -94,6 +96,7 @@ class Dojo(object):
                         del self.unallocated_living_space[index]
                     return True
             else:
+                self.unallocated_people['LIVINGSPACE'] = person_object
                 return False
         else:
             return False
@@ -129,6 +132,8 @@ class Dojo(object):
         for i in self.living_space_dict:
             if len(self.living_space_dict[i].allocation_list) > 0:
                 allocations_list[self.living_space_dict[i].name] = self.living_space_dict[i].allocation_list  
-        return allocations_list    
+        return allocations_list 
+    def get_unallocated_people(self):
+        return self.unallocated_people 
             
         
