@@ -17,34 +17,36 @@ class Dojo(object):
         self.fellow_dict = {}
         self.staff_dict = {}
         self.unallocated_people = {}
-    def create_room(self, room_name, room_type):
-        if isinstance(room_name, str) and isinstance(room_type, str):
-            if room_type == "OFFICE" and room_name not in self.office_dict:
-                office = Office(room_name)
-                self.office_dict[room_name] = office
-                self.unallocated_offices.append(office)
-                return True
-            elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
-                living_space = LivingSpace(room_name)
-                self.living_space_dict[room_name] = living_space
-                self.unallocated_living_space.append(living_space)
-                return True
-            else:
-                return False
+    def create_room(self, room_type, *room_names):
+        if isinstance(room_type, str):
+            for room_name in room_names:
+                if room_type == "OFFICE" and room_name not in self.office_dict:
+                    office = Office(room_name)
+                    self.office_dict[room_name] = office
+                    self.unallocated_offices.append(office)
+                    return True
+                elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
+                    living_space = LivingSpace(room_name)
+                    self.living_space_dict[room_name] = living_space
+                    self.unallocated_living_space.append(living_space)
+                    return True
+                else:
+                    return False
         else:
             raise TypeError('Values inserted must both be strings')
-    def add_person(self, person_name, person_type):
-        if isinstance(person_name, str) and isinstance(person_type, str):
-            if person_type == "FELLOW" and person_name not in self.fellow_dict:
-                fellow = Fellow(person_name)
-                self.fellow_dict[person_name] = fellow
-                return True
-            elif person_type == "STAFF" and person_name not in self.staff_dict:
-                staff = Staff(person_name)
-                self.staff_dict[person_name] = staff
-                return True
-            else:
-                return False
+    def add_person(self, person_type, *person_names):
+        if isinstance(person_type, str):
+            for person_name in person_names:
+                if person_type == "FELLOW" and person_name not in self.fellow_dict:
+                    fellow = Fellow(person_name)
+                    self.fellow_dict[person_name] = fellow
+                    return True
+                elif person_type == "STAFF" and person_name not in self.staff_dict:
+                    staff = Staff(person_name)
+                    self.staff_dict[person_name] = staff
+                    return True
+                else:
+                    return False
         else:
             raise TypeError('Values inserted must both be strings')
            
