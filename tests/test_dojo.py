@@ -193,3 +193,59 @@ class DojoTests(TestCase):
         value = dojo.room_occupants('test', 'OFFICE')
         self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
         self.assertFalse(value, 'The room put should not exsit in the office dictionary')
+    def test_get_room_allocations(self):
+        dojo = Dojo()
+        list_length = len(dojo.living_space_dict)  
+        for items in self.living_space_rooms_names:
+            dojo.create_room(items, "LIVINGSPACE")
+        self.assertEqual(len(self.living_space_rooms_names), len(dojo.living_space_dict)-list_length, "Rooms added to the office list do not match the number inserted")
+        #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
+        person_index = 0
+        test_index = ""
+        count = 0
+        for item in dojo.living_space_dict: 
+            while True:
+                if person_index <= 25:
+                    if dojo.living_space_dict[item].is_room_assignable():
+                        dojo.living_space_dict[item].add_person(self.list_fellows[person_index])
+                        person_index += 1
+                    else:
+                        self.assertEqual(4, dojo.living_space_dict[item].get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
+                        test_index = item
+                        count += 1
+                        break 
+                else:
+                    break
+            if person_index == 26:
+                break
+        self.assertEqual(count, 6, "The expected number should be 6")
+        self.assertEqual(len(dojo.living_space_dict)-count, 9, "The expected number of unallocated rooms should be 9")
+        self.assertEqual(4, dojo.living_space_dict[test_index].get_allocate_len(), "Value held by the living space dictionary has not been updated")
+
+        list_length = len(dojo.office_dict)  
+        for items in self.office_rooms_names:
+            dojo.create_room(items, "OFFICE")
+        self.assertEqual(len(self.office_rooms_names), len(dojo.office_dict)-list_length, "Rooms added to the office list do not match the number inserted")
+        #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
+        person_index = 0
+        test_index = ""
+        count = 0
+        for item in dojo.office_dict: 
+            while True:
+                if person_index <= 25:
+                    if dojo.office_dict[item].is_room_assignable():
+                        dojo.office_dict[item].add_person(self.list_staffs[person_index])
+                        person_index += 1
+                    else:
+                        self.assertEqual(6, dojo.office_dict[item].get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
+                        test_index = item
+                        count += 1
+                        break 
+                else:
+                    break
+            if person_index == 26:
+                break
+        self.assertEqual(count, 4, "The expected number should be 6")
+        value = self.dojo.get_allocations()
+        self.assertEqual( 26*2, len(value), "Not all the values were returned")
+        
