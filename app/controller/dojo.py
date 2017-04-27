@@ -38,7 +38,7 @@ class Dojo(object):
                 self.fellow_dict[person_name] = fellow
                 return True
             elif person_type == "STAFF" and person_name not in self.staff_dict:
-                staff = Stuff(person_name)
+                staff = Staff(person_name)
                 self.staff_dict[person_name] = staff
                 return True
             else:
@@ -65,4 +65,6 @@ class Dojo(object):
                 else:
                     return False
         return True
+    def allocate_rooms(self, person_object, room_type):
+        pass
         
