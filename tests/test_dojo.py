@@ -246,6 +246,6 @@ class DojoTests(TestCase):
             if person_index == 26:
                 break
         self.assertEqual(count, 4, "The expected number should be 6")
-        value = self.dojo.get_allocations()
+        value = dojo.get_allocations()
         self.assertEqual( 26*2, len(value), "Not all the values were returned")
         
