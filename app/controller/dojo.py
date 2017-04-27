@@ -94,6 +94,15 @@ class Dojo(object):
                     del self.unallocated_living_space[index]
                 return True
     def find_person(self, person_name, position):
-        pass
+        if position is "FELLOW":
+            if person_name in self.fellow_dict:
+                return True
+            else:
+                return False
+        if position is "STAFF":
+            if person_name in self.staff_dict:
+                return True
+            else:
+                return False
             
         
