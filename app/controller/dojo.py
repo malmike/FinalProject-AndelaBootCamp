@@ -2,6 +2,7 @@ from app.models.office import Office
 from app.models.living_space import LivingSpace
 from app.models.fellow import Fellow
 from app.models.staff import Staff
+import random
 
 class Dojo(object):
     
@@ -66,5 +67,32 @@ class Dojo(object):
                     return False
         return True
     def allocate_rooms(self, person_object, room_type):
-        pass
+        if room_type is "OFFICE":
+            if not self.unallocated_offices:
+                return False
+            index = random.choice(range(len(self.unallocated_offices)))
+            value = self.unallocated_offices[index].add_person(person_object)
+            if not value:
+                return False
+            else:
+                self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
+                if not self.unallocated_offices[index].is_room_assignable:
+                    self.allocated_offices.append(self.unallocated_offices[index])
+                    del self.unallocated_offices[index]
+                return True
+        elif room_type is "LIVINGSPACE":
+            if not self.unallocated_living_space:
+                return False
+            index = random.choice(range(len(self.unallocated_living_space)))
+            value = self.unallocated_living_space[index].add_person(person_object)
+            if not value:
+                return False
+            else:
+                self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
+                if not self.unallocated_living_space[index].is_room_assignable:
+                    self.allocated_living_space.append(self.unallocated_living_space[index])
+                    del self.unallocated_living_space[index]
+                return True
+
+            
         
