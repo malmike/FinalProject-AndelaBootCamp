@@ -104,7 +104,18 @@ class Dojo(object):
                 return True
             else:
                 return False
-    def room_occupants(self, person_name, position):
-        pass
+    def room_occupants(self, room_name, room_type):
+        if room_type is "OFFICE":
+            if room_name in self.office_dict:
+                return self.office_dict[room_name].allocation_list
+            else:
+                return False
+        elif room_type is 'LIVINGSPACE':
+            if room_name in self.living_space_dict:
+                return self.living_space_dict[room_name].allocation_list
+            else:
+                return False
+        else:
+            return False
             
         
