@@ -133,7 +133,6 @@ class DojoTests(TestCase):
             self.assertTrue(value, "The add person function is failing. Check it and also verify that it's test is proper")
         self.assertEqual(len(dojo.staff_dict), len(self.staff_names), "Why were not all staff created? Verify your add person method and the test")
         for item in dojo.staff_dict:
-    
             value = dojo.allocate_rooms(dojo.staff_dict[item], "OFFICE")
             self.assertTrue(value, "Staff value has failed to be allocated an office")
         for item in dojo.allocated_offices:
@@ -142,7 +141,7 @@ class DojoTests(TestCase):
             self.assertEqual(len(item.allocation_list), len(dojo.office_dict[item.name].allocation_list), "Values in the office dictionary do not match those in the unallocated office list")
     def test_allocate_living_space(self):
         dojo = Dojo()
-        for living_space in  self.living_space_rooms_names:
+        for living_space in self.living_space_rooms_names:
             value = dojo.create_room(living_space, "LIVINGSPACE")
             self.assertTrue(value, "Why isn't the create room function working, cross check the tests and methods for create room")
         self.assertEqual(len(dojo.living_space_dict), len(self.living_space_rooms_names), "Why were not all rooms created? Verify your create room method and the test")
@@ -152,7 +151,7 @@ class DojoTests(TestCase):
         self.assertEqual(len(dojo.living_space_dict), len(self.living_space_rooms_names), "Why were not all staff created? Verify your add person method and the test")
         for item in dojo.living_space_dict:
             value = dojo.allocate_rooms(dojo.living_space_dict[item], "LIVINGSPACE")
-            self.assertTrue(value, "Staff value has failed to be allocated an office")
+            self.assertTrue(value, "Fellow value has failed to be allocated living space")
         for item in dojo.allocated_living_space:
             self.assertEqual(len(item.allocation_list), len(dojo.living_space_dict[item.name].allocation_list), "Values in the living space dictionary do not match those in the allocated living space list")
         for item in dojo.unallocated_living_space:

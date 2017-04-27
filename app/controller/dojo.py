@@ -68,31 +68,35 @@ class Dojo(object):
         return True
     def allocate_rooms(self, person_object, room_type):
         if room_type is "OFFICE":
-            if not self.unallocated_offices:
-                return False
-            index = random.choice(range(len(self.unallocated_offices)))
-            value = self.unallocated_offices[index].add_person(person_object)
-            if not value:
-                return False
+            if len(self.unallocated_offices) > 0:   
+                index = random.choice(range(len(self.unallocated_offices)))
+                value = self.unallocated_offices[index].add_person(person_object)
+                if not value:
+                    self.allocate_rooms(person_object, room_type)
+                else:
+                    self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
+                    if not self.unallocated_offices[index].is_room_assignable:
+                        self.allocated_offices.append(self.unallocated_offices[index])
+                        del self.unallocated_offices[index]
+                    return True
             else:
-                self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
-                if not self.unallocated_offices[index].is_room_assignable:
-                    self.allocated_offices.append(self.unallocated_offices[index])
-                    del self.unallocated_offices[index]
-                return True
+                return False
         elif room_type is "LIVINGSPACE":
-            if not self.unallocated_living_space:
-                return False
-            index = random.choice(range(len(self.unallocated_living_space)))
-            value = self.unallocated_living_space[index].add_person(person_object)
-            if not value:
-                return False
+            if len(self.unallocated_living_space) > 0:
+                index = random.choice(range(len(self.unallocated_living_space)))
+                value = self.unallocated_living_space[index].add_person(person_object)
+                if not value:
+                    self.allocate_rooms(person_object, room_type)
+                else:
+                    self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
+                    if not self.unallocated_living_space[index].is_room_assignable:
+                        self.allocated_living_space.append(self.unallocated_living_space[index])
+                        del self.unallocated_living_space[index]
+                    return True
             else:
-                self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
-                if not self.unallocated_living_space[index].is_room_assignable:
-                    self.allocated_living_space.append(self.unallocated_living_space[index])
-                    del self.unallocated_living_space[index]
-                return True
+                return False
+        else:
+            return False
     def find_person(self, person_name, position):
         if position is "FELLOW":
             if person_name in self.fellow_dict:
