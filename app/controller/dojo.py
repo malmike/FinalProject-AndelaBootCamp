@@ -122,6 +122,13 @@ class Dojo(object):
         else:
             return False
     def get_allocations(self):
-        pass
+        allocations_list = {}
+        for i in self.office_dict:
+            if len(self.office_dict[i].allocation_list) > 0:
+                allocations_list[self.office_dict[i].name] = self.office_dict[i].allocation_list
+        for i in self.living_space_dict:
+            if len(self.living_space_dict[i].allocation_list) > 0:
+                allocations_list[self.living_space_dict[i].name] = self.living_space_dict[i].allocation_list  
+        return allocations_list    
             
         

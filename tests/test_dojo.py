@@ -229,7 +229,7 @@ class DojoTests(TestCase):
         #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
         person_index = 0
         test_index = ""
-        count = 0
+        count2 = 0
         for item in dojo.office_dict: 
             while True:
                 if person_index <= 25:
@@ -239,13 +239,14 @@ class DojoTests(TestCase):
                     else:
                         self.assertEqual(6, dojo.office_dict[item].get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
                         test_index = item
-                        count += 1
+                        count2 += 1
                         break 
                 else:
                     break
             if person_index == 26:
                 break
-        self.assertEqual(count, 4, "The expected number should be 6")
+        self.assertEqual(count2, 4, "The expected number should be 6")
         value = dojo.get_allocations()
-        self.assertEqual( 26*2, len(value), "Not all the values were returned")
+        self.assertLess( count + count2, len(value), "Not all the values were returned")
+        self.assertTrue(isinstance(value, dict), 'The returned value should be a dictionary')
         
