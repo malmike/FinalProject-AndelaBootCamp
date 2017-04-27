@@ -154,3 +154,15 @@ class DojoTests(TestCase):
         value2 = self.dojo.find_person('Blue2', 'FELLOW')
         self.assertTrue(value, "Value should be existing in the fellow dictionary")
         self.assertFalse(value2, "Value 2 should not exist in the fellow dictionary")
+    def test_get_room_occupants(self):
+        blue_office = self.dojo.create_room('Blue', 'OFFICE')
+        assigned_people = []
+        for i in self.list_fellows:
+            if self.dojo.office_dict['Blue'].is_room_assignable():
+                self.dojo.office_dict['Blue'].add_person(i)
+                assigned_people.append(i)
+            else:
+                break
+        self.assertEqual(len(self.dojo.office_dict['Blue'].allocation_list), len(assigned_people), 'Test values do not match')
+        list_items = self.dojo.room_occupants('Blue', 'OFFICE')
+        self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
