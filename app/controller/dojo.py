@@ -104,5 +104,7 @@ class Dojo(object):
                 return True
             else:
                 return False
+    def room_occupants(self, person_name, position):
+        pass
             
         
