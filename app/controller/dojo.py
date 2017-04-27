@@ -20,12 +20,12 @@ class Dojo(object):
             if room_type == "OFFICE" and room_name not in self.office_dict:
                 office = Office(room_name)
                 self.office_dict[room_name] = office
-                #self.unallocated_offices.append(office)
+                self.unallocated_offices.append(office)
                 return True
             elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
                 living_space = LivingSpace(room_name)
                 self.living_space_dict[room_name] = living_space
-                #self.unallocated_living_space.append(living_space)
+                self.unallocated_living_space.append(living_space)
                 return True
             else:
                 return False
