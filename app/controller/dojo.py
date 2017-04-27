@@ -17,21 +17,20 @@ class Dojo(object):
         self.fellow_dict = {}
         self.staff_dict = {}
         self.unallocated_people = {}
-    def create_room(self, room_type, *room_names):
+    def create_room(self, room_type, room_name):
         if isinstance(room_type, str):
-            for room_name in room_names:
-                if room_type == "OFFICE" and room_name not in self.office_dict:
-                    office = Office(room_name)
-                    self.office_dict[room_name] = office
-                    self.unallocated_offices.append(office)
-                    return True
-                elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
-                    living_space = LivingSpace(room_name)
-                    self.living_space_dict[room_name] = living_space
-                    self.unallocated_living_space.append(living_space)
-                    return True
-                else:
-                    return False
+            if room_type == "OFFICE" and room_name not in self.office_dict:
+                office = Office(room_name)
+                self.office_dict[room_name] = office
+                self.unallocated_offices.append(office)
+                return office
+            elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
+                living_space = LivingSpace(room_name)
+                self.living_space_dict[room_name] = living_space
+                self.unallocated_living_space.append(living_space)
+                return living_space
+            else:
+                return False
         else:
             raise TypeError('Values inserted must both be strings')
     def add_person(self, person_type, *person_names):
@@ -40,11 +39,11 @@ class Dojo(object):
                 if person_type == "FELLOW" and person_name not in self.fellow_dict:
                     fellow = Fellow(person_name)
                     self.fellow_dict[person_name] = fellow
-                    return True
+                    return fellow
                 elif person_type == "STAFF" and person_name not in self.staff_dict:
                     staff = Staff(person_name)
                     self.staff_dict[person_name] = staff
-                    return True
+                    return staff
                 else:
                     return False
         else:
@@ -71,6 +70,7 @@ class Dojo(object):
         return True
     def allocate_rooms(self, person_object, room_type):
         if room_type is "OFFICE":
+            
             if len(self.unallocated_offices) > 0:   
                 index = random.choice(range(len(self.unallocated_offices)))
                 value = self.unallocated_offices[index].add_person(person_object)
@@ -81,10 +81,11 @@ class Dojo(object):
                     return self.allocate_rooms(person_object, room_type)
                 else:
                     self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
+                    allocation_office_name = self.unallocated_offices[index].name
                     if not self.unallocated_offices[index].is_room_assignable:
                         self.allocated_offices.append(self.unallocated_offices[index])
                         del self.unallocated_offices[index]
-                    return True
+                    return "allocation_office_name"
             else:
                 self.unallocated_people['OFFICE'] = person_object
                 return False
@@ -99,10 +100,11 @@ class Dojo(object):
                     return self.allocate_rooms(person_object, room_type)
                 else:
                     self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
+                    allocation_living_space_name = self.unallocated_living_space[index].name
                     if not self.unallocated_living_space[index].is_room_assignable:
                         self.allocated_living_space.append(self.unallocated_living_space[index])
                         del self.unallocated_living_space[index]
-                    return True
+                    return allocation_living_space_name
             else:
                 self.unallocated_people['LIVINGSPACE'] = person_object
                 return False
