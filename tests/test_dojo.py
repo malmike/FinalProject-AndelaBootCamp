@@ -149,7 +149,7 @@ class DojoTests(TestCase):
         for item in self.dojo.unallocated_living_space:
             self.assertEqual(len(item.allocation_list), len(self.dojo.living_space_dict[item.name].allocation_list), "Values in the living space dictionary do not match those in the unallocated living space list")
     def test_person_exists_in_dict(self):
-        blue_person = self.dojo.create_person('Blue', 'FELLOW')
+        blue_person = self.dojo.add_person('Blue', 'FELLOW')
         value = self.dojo.find_person('Blue', 'FELLOW')
         value2 = self.dojo.find_person('Blue2', 'FELLOW')
         self.assertTrue(value, "Value should be existing in the fellow dictionary")
