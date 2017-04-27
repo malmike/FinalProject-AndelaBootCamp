@@ -121,5 +121,7 @@ class Dojo(object):
                 return False
         else:
             return False
+    def get_allocations():
+        pass
             
         
