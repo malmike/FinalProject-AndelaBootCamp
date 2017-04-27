@@ -94,9 +94,11 @@ class DojoTests(TestCase):
             if person_index == 26:
                 break
         self.assertEqual(count, 6, "The expected number should be 6")
+        self.assertEqual(len(self.dojo.living_space_dict)-count, 9, "The expected number of unallocated rooms should be 9")
         self.assertEqual(4, self.dojo.living_space_dict[test_index].get_allocate_len(), "Value held by the living space dictionary has not been updated")
 
-        self.dojo.sort_allocated_room(self.dojo.living_space_dict, 'LIVINGSPACE')
+        value = self.dojo.sort_allocated_room(self.dojo.living_space_dict, 'LIVINGSPACE')
+        self.assertTrue(value, "The sorting stopped mid way, check the reason. Probable problem is you are passing wrong room_type")
         length_of_assigned_living_space_list = len(self.dojo.allocated_living_space)
         length_of_unassigned_living_space_list = len(self.dojo.unallocated_living_space)
         self.assertEqual(length_of_assigned_living_space_list, len(self.assigned_living_space), "The living space dict was not properly sorted")
