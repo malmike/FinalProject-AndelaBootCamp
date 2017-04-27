@@ -116,6 +116,19 @@ class DojoTests(TestCase):
         self.assertFalse(malmike_fellow2, "Repeated fellow being created")
         new_fellow_count = len(self.dojo.fellow_dict)
         self.assertEqual(new_fellow_count - initial_fellow_count, 0, "The value is being added to the fellow dictionary when it should not")
-    
-
-
+    def test_allocate_room(self):
+        for office in  self.office_rooms_names:
+            value = self.dojo.create_room(office, "OFFICE")
+            self.assertTrue(value, "Why isn't the create room function working, cross check the tests and methods for create room")
+        self.assertEqual(len(self.dojo.office_dict), len(self.office_rooms_names), "Why were not all rooms created? Verify your create room method and the test")
+        for staff in self.staff_names:
+            value = self.dojo.add_person(staff, "STAFF")
+            self.assertTrue(value, "The add person function is failing. Check it and also verify that it's test is proper")
+        self.assertEqual(len(self.dojo.staff_dict), len(self.staff_names), "Why were not all staff created? Verify your add person method and the test")
+        for item in self.dojo.staff_dict:
+            value = self.dojo.allocate_rooms(self.dojo.staff_dict[item], "OFFICE")
+            self.assertTrue(value, "Staff value has failed to be allocated an office")
+        for item in self.dojo.allocated_offices:
+            self.assertEqual(len(item.allocation_list), len(self.dojo.office_dict[item.name].allocation_list), "Values in the office dictionary do not match those in the allocated office list")
+        for item in self.dojo.unallocated_offices:
+            self.assertEqual(len(item.allocation_list), len(self.dojo.office_dict[item.name].allocation_list), "Values in the office dictionary do not match those in the unallocated office list")
