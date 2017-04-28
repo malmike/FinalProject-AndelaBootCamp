@@ -189,27 +189,27 @@ class Dojo(object):
         office_fellow_alloc = create_schema.load_office_fellow_allocations()
         livingspaces_alloc = create_schema.load_living_space_allocations()
         office_alloc = create_schema.load_office_allocations()
-        print (office_alloc)
-        print (livingspaces_alloc)
-        print (staffs)
 
         for office in offices:
             self.create_room("OFFICE", office[0])
         for livingspace in livingspaces:
             self.create_room("LIVINGSPACE", livingspace[0])
         for staff in staffs:
-            self.create_room("STAFF", staff[0])
+            self.add_person("STAFF", staff[0])
         for fellow in fellows:
-            self.create_room("FELLOW", fellow[0])
+            self.add_person("FELLOW", fellow[0])
         print ('Creating office staff allocations')
         for alloc_office in office_staff_alloc:
-            print (alloc_office)
+            value = self.staff_dict[str(alloc_office[1])]
+            self.allocate_rooms(value, "OFFICE")
         print ('Creating office fellow allocations')
         for alloc_office in office_fellow_alloc:
-            print (alloc_office)
+            value = self.fellow_dict[str(alloc_office[2])]
+            self.allocate_rooms(value, "OFFICE")
         print ('Living space allocations')
         for alloc_living_space in livingspaces_alloc:
-            print (alloc_living_space)
+            value = self.fellow_dict[str(alloc_living_space[1])]
+            self.allocate_rooms(value, "LIVINGSPACE")
 
             
         

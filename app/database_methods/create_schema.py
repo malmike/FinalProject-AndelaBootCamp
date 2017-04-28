@@ -6,6 +6,7 @@ class CreateSchema(object):
     def __init__(self, dbname):
         self.db_schema = DbSchema()
         if dbname == '':
+            print ('here')
             self.engine = create_engine("sqlite://")
         else:
             self.engine = create_engine("sqlite:///"+dbname)
@@ -66,11 +67,11 @@ class CreateSchema(object):
         result = self.conn.execute(select_stmt).fetchall()
         return result
     def load_staff(self):
-        select_stmt = select([self.db_schema.staff.c.name])
+        select_stmt = select([self.db_schema.staff])
         result = self.conn.execute(select_stmt).fetchall()
         return result
     def load_fellow(self):
-        select_stmt = select([self.db_schema.fellow.c.name])
+        select_stmt = select([self.db_schema.fellow])
         result = self.conn.execute(select_stmt).fetchall()
         return result
     def load_office_staff_allocations(self):
