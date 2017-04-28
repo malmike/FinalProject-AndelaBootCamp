@@ -4,10 +4,14 @@
         TheDojo add_person <first_name> <last_name> <position> [<Y> | <N>]
         TheDojo print_room <room_name>
         TheDojo print_allocations [-o <filename>]
+        TheDojo save_state [--db <sqlite_database>]
+        TheDojo save_state <sqlite_database>
         TheDojo -h | --help
         TheDojo --version
 
     Options:
+        --db         Specifies which database we are to use
+        -o           Specifies whether to write the resulting values to a text file
         -h  --help   Show this screen.
         --version    Show version.
 
@@ -159,8 +163,24 @@ class TheDojo(cmd.Cmd):
                         print (str(x.name))
                     r += 1
                 print('---------------------------------------------')
-
-
+    
+    @docopt_cmd
+    def do_save_state(self, arg):
+        """Usage: save_state [--db <sqlite_database>]"""
+        db = arg['--db']
+        sqlite_database = arg['<sqlite_database>']
+        create_schema = None
+        if db and sqlite_database:
+            dojo.save_state(sqlite_database)
+        else:
+            dojo.save_state('')
+    
+    @docopt_cmd
+    def do_load_state(self, arg):
+        """Usage: save_state <sqlite_database>"""
+        sqlite_database = arg['<sqlite_database>']
+        dojo.load_data(sqlite_database)
+        
 
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
