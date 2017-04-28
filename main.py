@@ -74,22 +74,22 @@ class TheDojo(cmd.Cmd):
             if isinstance(room_names, str):
                 value = dojo.create_room(room_type, room_name)
                 if value:
-                    print ("An "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                    print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
                 else:
                     if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
-                        print ( room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                        print ( "\n"+room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                     else:
-                        print ("RoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
+                        print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
             else:
                 for room_name in room_names:
                     value = dojo.create_room(room_type, room_name)
                     if value:
-                        print ("An "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                        print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
                     else:
                         if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
                             print ( room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                         else:
-                            print ("RoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
+                            print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
         else:
             raise TypeError("RoomType is meant to be a string \nmain.py create_room <room_type> <room_name>...")
     @docopt_cmd
@@ -103,23 +103,23 @@ class TheDojo(cmd.Cmd):
 
         person_value = dojo.add_person(position.upper(), name)
         if person_value:
-            print (position.capitalize() +" "+ name +" has been successfully added")
+            print ("\n"+position.capitalize() +" "+ name +" has been successfully added")
             office_value = dojo.allocate_rooms(person_value, 'OFFICE')
             if office_value:
-                print (first_name.capitalize()+' has been allocated the office '+ office_value)
+                print ("\n"+first_name.capitalize()+' has been allocated the office '+ office_value)
             else:
-                print (first_name.capitalize()+' could not be allocated an office')
+                print ("\n"+first_name.capitalize()+' could not be allocated an office')
             if accomodation == "Y" and position.upper() == "FELLOW":
                 living_space_value = dojo.allocate_rooms(person_value, 'LIVINGSPACE')
                 if living_space_value:
-                    print (first_name.capitalize()+' has been allocated the living space '+ living_space_value)
+                    print ("\n"+first_name.capitalize()+' has been allocated the living space '+ living_space_value)
                 else:
-                    print (first_name.capitalize()+' could not be allocated living space')
+                    print ("\n"+first_name.capitalize()+' could not be allocated living space')
         else:
             if position.upper() == "STAFF" or position.upper() == "FELLOW":
-                print ( position.capitalize() +" "+ name+" already exists \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n" )
+                print ( "\n"+position.capitalize() +" "+ name+" already exists \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n" )
             else:
-                print ("Position is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
+                print ("\nPosition is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
     
     @docopt_cmd
     def do_print_room(self, arg):
@@ -131,7 +131,7 @@ class TheDojo(cmd.Cmd):
             for i in allocation_list:
                 print ('-\t'+ i.name)
         else:
-            print ("This room does not have any allocations or does not exist")
+            print ("\nThis room does not have any allocations or does not exist")
 
 
     @docopt_cmd
