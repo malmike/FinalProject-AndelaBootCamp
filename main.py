@@ -1,5 +1,6 @@
 """
     Usage:
+        TheDojo start
         TheDojo create_room <room_type> <room_name>...
         TheDojo add_person <first_name> <last_name> <position> [<Y> | <N>]
         TheDojo print_room <room_name>
@@ -180,7 +181,11 @@ class TheDojo(cmd.Cmd):
         """Usage: save_state <sqlite_database>"""
         sqlite_database = arg['<sqlite_database>']
         dojo.load_data(sqlite_database)
-        
+    
+    @docopt_cmd
+    def do_start(self, arg):
+        """Usage: start"""
+        pass
 
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
