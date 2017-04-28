@@ -148,6 +148,37 @@ class Dojo(object):
         create_schema = CreateSchema(db)
         create_schema.save_state(self.office_dict, self.living_space_dict, self.staff_dict, self.fellow_dict)
 
-   
+    def load_data(self, db):
+        create_schema = CreateSchema(db)
+        offices = create_schema.load_offices()
+        livingspaces = create_schema.load_living_space()
+        staffs = create_schema.load_staff()
+        fellows = create_schema.load_fellow()
+        office_staff_alloc = create_schema.load_office_staff_allocations()
+        office_fellow_alloc = create_schema.load_office_fellow_allocations()
+        livingspaces_alloc = create_schema.load_living_space_allocations()
+        office_alloc = create_schema.load_office_allocations()
+        print (office_alloc)
+        print (livingspaces_alloc)
+        print (staffs)
+
+        for office in offices:
+            self.create_room("OFFICE", office[0])
+        for livingspace in livingspaces:
+            self.create_room("LIVINGSPACE", livingspace[0])
+        for staff in staffs:
+            self.create_room("STAFF", staff[0])
+        for fellow in fellows:
+            self.create_room("FELLOW", fellow[0])
+        print ('Creating office staff allocations')
+        for alloc_office in office_staff_alloc:
+            print (alloc_office)
+        print ('Creating office fellow allocations')
+        for alloc_office in office_fellow_alloc:
+            print (alloc_office)
+        print ('Living space allocations')
+        for alloc_living_space in livingspaces_alloc:
+            print (alloc_living_space)
+
             
         
