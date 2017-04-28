@@ -33,19 +33,18 @@ class Dojo(object):
                 return False
         else:
             raise TypeError('Values inserted must both be strings')
-    def add_person(self, person_type, *person_names):
+    def add_person(self, person_type, person_name):
         if isinstance(person_type, str):
-            for person_name in person_names:
-                if person_type == "FELLOW" and person_name not in self.fellow_dict:
-                    fellow = Fellow(person_name)
-                    self.fellow_dict[person_name] = fellow
-                    return fellow
-                elif person_type == "STAFF" and person_name not in self.staff_dict:
-                    staff = Staff(person_name)
-                    self.staff_dict[person_name] = staff
-                    return staff
-                else:
-                    return False
+            if person_type == "FELLOW" and person_name not in self.fellow_dict:
+                fellow = Fellow(person_name)
+                self.fellow_dict[person_name] = fellow
+                return fellow
+            elif person_type == "STAFF" and person_name not in self.staff_dict:
+                staff = Staff(person_name)
+                self.staff_dict[person_name] = staff
+                return staff
+            else:
+                return False
         else:
             raise TypeError('Values inserted must both be strings')
            
@@ -85,7 +84,7 @@ class Dojo(object):
                     if not self.unallocated_offices[index].is_room_assignable:
                         self.allocated_offices.append(self.unallocated_offices[index])
                         del self.unallocated_offices[index]
-                    return "allocation_office_name"
+                    return allocation_office_name
             else:
                 self.unallocated_people['OFFICE'] = person_object
                 return False
@@ -121,19 +120,14 @@ class Dojo(object):
                 return True
             else:
                 return False
-    def room_occupants(self, room_name, room_type):
-        if room_type is "OFFICE":
-            if room_name in self.office_dict:
-                return self.office_dict[room_name].allocation_list
-            else:
-                return False
-        elif room_type is 'LIVINGSPACE':
-            if room_name in self.living_space_dict:
-                return self.living_space_dict[room_name].allocation_list
-            else:
-                return False
+    def room_occupants(self, room_name):
+        if room_name in self.office_dict:
+            return self.office_dict[room_name].allocation_list
+        elif room_name in self.living_space_dict:
+            return self.living_space_dict[room_name].allocation_list
         else:
             return False
+
     def get_allocations(self):
         allocations_list = {}
         for i in self.office_dict:
