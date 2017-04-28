@@ -115,7 +115,20 @@ class TheDojo(cmd.Cmd):
                 print ( position.capitalize() +" "+ name+" already exists \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n" )
             else:
                 print ("Position is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
-   
+    
+    @docopt_cmd
+    def do_print_room(self, arg):
+        """Usage: print_room <room_name>"""
+        room_name = arg['<room_name>']
+        allocation_list = dojo.room_occupants(room_name)
+        if allocation_list:
+            print ("OCCUPANTS OF THE ROOM "+ room_name.upper())
+            for i in allocation_list:
+                print ('-\t'+ i.name)
+        else:
+            print ("This room does not have any allocations or does not exist")
+
+
 
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
