@@ -174,8 +174,8 @@ class DojoTests(TestCase):
             else:
                 break
         self.assertEqual(len(dojo.office_dict['Blue'].allocation_list), len(assigned_people), 'Test values do not match')
-        list_items = dojo.room_occupants('Blue', 'OFFICE')
-        value = dojo.room_occupants('test', 'OFFICE')
+        list_items = dojo.room_occupants('Blue')
+        value = dojo.room_occupants('test')
         self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
         self.assertFalse(value, 'The room put should not exsit in the office dictionary')
     def test_get_room_occupants(self):
@@ -189,8 +189,8 @@ class DojoTests(TestCase):
             else:
                 break
         self.assertEqual(len(dojo.office_dict['Blue'].allocation_list), len(assigned_people), 'Test values do not match')
-        list_items = dojo.room_occupants('Blue', 'OFFICE')
-        value = dojo.room_occupants('test', 'OFFICE')
+        list_items = dojo.room_occupants('Blue')
+        value = dojo.room_occupants('test')
         self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
         self.assertFalse(value, 'The room put should not exsit in the office dictionary')
     def test_get_room_allocations(self):
