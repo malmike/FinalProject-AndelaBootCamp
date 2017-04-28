@@ -129,6 +129,38 @@ class TheDojo(cmd.Cmd):
             print ("This room does not have any allocations or does not exist")
 
 
+    @docopt_cmd
+    def do_print_allocation(self, arg):
+        """Usage: print_allocations [-o <filename>]"""
+        test = arg ['-o']
+        filename = arg['<filename>']
+        allocations = dojo.get_allocations()
+        if test:
+            file = open(filename, "w")
+            for i in allocations:
+                file.write('\n'+str(i).upper()+'\n')
+                r = 1
+                for x in allocations[i]:
+                    if r < len(allocations[i]):
+                        file.write(str(x.name)+', ')
+                    else:
+                        file.write(str(x.name)+ '\n')
+                    r += 1
+                file.write('---------------------------------------------')
+            file.close()
+        else:
+            for i in allocations:
+                print ('\n'+str(i).upper())
+                r = 1
+                for x in allocations[i]:
+                    if r < len(allocations[i]):
+                        print (str(x.name), end=', ')
+                    else:
+                        print (str(x.name))
+                    r += 1
+                print('---------------------------------------------')
+
+
 
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
