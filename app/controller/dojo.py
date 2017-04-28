@@ -4,7 +4,10 @@ from app.models.fellow import Fellow
 from app.models.staff import Staff
 from app.database_methods.create_schema import CreateSchema
 import random
-
+"""
+This is the main controller class of the application. It is meant to interact with the 
+models and database interaction files and also with the user interaction interface module
+"""
 
 
 class Dojo(object):
