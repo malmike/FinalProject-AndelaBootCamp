@@ -87,6 +87,34 @@ class TheDojo(cmd.Cmd):
                             print ("RoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
         else:
             raise TypeError("RoomType is meant to be a string \nmain.py create_room <room_type> <room_name>...")
+    @docopt_cmd
+    def do_add_person(self, arg):
+        """Usage: add_person <first_name> <last_name> <position> [<Y> | <N>]"""
+        first_name = arg['<first_name>']
+        last_name = arg['<last_name>']
+        position = arg['<position>']
+        accomodation = arg['<Y>']
+        name = first_name+" "+ last_name
+
+        person_value = dojo.add_person(position.upper(), name)
+        if person_value:
+            print (position.capitalize() +" "+ name +" has been successfully added")
+            office_value = dojo.allocate_rooms(person_value, 'OFFICE')
+            if office_value:
+                print (first_name.capitalize()+' has been allocated the office '+ office_value)
+            else:
+                print (first_name.capitalize()+' could not be allocated an office')
+            if accomodation == "Y" and position.upper() == "FELLOW":
+                living_space_value = dojo.allocate_rooms(person_value, 'LIVINGSPACE')
+                if living_space_value:
+                    print (first_name.capitalize()+' has been allocated the living space '+ living_space_value)
+                else:
+                    print (first_name.capitalize()+' could not be allocated living space')
+        else:
+            if position.upper() == "STAFF" or position.upper() == "FELLOW":
+                print ( position.capitalize() +" "+ name+" already exists \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n" )
+            else:
+                print ("Position is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
    
 
     def do_quit(self, arg):
