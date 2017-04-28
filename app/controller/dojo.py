@@ -2,7 +2,10 @@ from app.models.office import Office
 from app.models.living_space import LivingSpace
 from app.models.fellow import Fellow
 from app.models.staff import Staff
+from app.database_methods.create_schema import CreateSchema
 import random
+
+
 
 class Dojo(object):
     
@@ -17,6 +20,7 @@ class Dojo(object):
         self.fellow_dict = {}
         self.staff_dict = {}
         self.unallocated_people = {}
+
     def create_room(self, room_type, room_name):
         if isinstance(room_type, str):
             if room_type == "OFFICE" and room_name not in self.office_dict:
@@ -138,6 +142,12 @@ class Dojo(object):
                 allocations_list[self.living_space_dict[i].name] = self.living_space_dict[i].allocation_list  
         return allocations_list 
     def get_unallocated_people(self):
-        return self.unallocated_people 
+        return self.unallocated_people
+
+    def save_state(self, db):
+        create_schema = CreateSchema(db)
+        create_schema.save_state(self.office_dict, self.living_space_dict, self.staff_dict, self.fellow_dict)
+
+   
             
         
