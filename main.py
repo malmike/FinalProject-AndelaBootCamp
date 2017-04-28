@@ -59,6 +59,35 @@ class TheDojo(cmd.Cmd):
     prompt = '(TheDojo)'
     file = None
 
+    @docopt_cmd
+    def do_create_room(self, arg):
+        """Usage: create_room <room_type> <room_name>..."""
+        room_type = arg['<room_type>']
+        room_names = arg['<room_name>']
+        if isinstance(room_type, str):
+            room_type = room_type.upper()
+            if isinstance(room_names, str):
+                value = dojo.create_room(room_type, room_name)
+                if value:
+                    print ("An "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                else:
+                    if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
+                        print ( room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                    else:
+                        print ("RoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
+            else:
+                for room_name in room_names:
+                    value = dojo.create_room(room_type, room_name)
+                    if value:
+                        print ("An "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                    else:
+                        if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
+                            print ( room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                        else:
+                            print ("RoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
+        else:
+            raise TypeError("RoomType is meant to be a string \nmain.py create_room <room_type> <room_name>...")
+   
 
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
