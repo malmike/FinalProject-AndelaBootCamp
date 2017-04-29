@@ -19,8 +19,8 @@ This system will be used to automatically allocate spaces to people at random.
 - Change to the directory where you wish to store it and [clone this repository](https://help.github.com/articles/cloning-a-repository/)
 - Change into the created directory and [create a virual environment within the repository using virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/). Call the folder that contains the settings of the virtual environment .venv
 - Start the virtual environment
-- You can now start the application by typing in "python main.py start"
-- You can then type "help" to access the usage commands for the system.
+- You can now start the application by typing in **python main.py start**
+- You can then type **help** to access the usage commands for the system.
 
 ### Sample Usage Commands
 - create_room <room_type> <room_name>...
