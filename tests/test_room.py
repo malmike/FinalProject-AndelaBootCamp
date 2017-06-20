@@ -5,6 +5,7 @@ from app.models.living_space import LivingSpace
 from app.models.fellow import Fellow
 
 class RoomTests(TestCase):
+    
     def setUp(self):
         self.name = 'orange'
         self.room_type = 'office'
@@ -23,18 +24,25 @@ class RoomTests(TestCase):
 
     def test_room_instance(self):
         self.assertIsInstance(self.room, Room, "Object room is not an instance of class Room")
+    
     def test_room_attributes(self):
         self.assertEqual(self.room.name, self.name, "The value that is passed into name and that returned, do not match")
+    
     def test_office_inherits_room(self):
         self.assertTrue(issubclass(Office, Room), "Office class doesnot inherit from the Room class")
+    
     def test_office_is_an_instance_of_Office(self):
         self.assertIsInstance(self.office, Office, "Object office is not an instance of the Office class")
+    
     def test_name_attribute_in_office(self):
         self.assertEqual(self.office.name, self.name, "The value that is passed into name for office object and that returned, do not match")
+    
     def test_fixed_attributes_in_office(self):
         self.assertEqual(self.office.room_type, 'OFFICE', "Office doesnot contain any attribute type")
+    
     def test_allocate_list_in_office(self):
         self.assertTrue(isinstance(self.office.allocation_list, list), "There is no list allocate_list in office")
+    
     def test_allocate_list_values_in_office(self):
         x = 1
         for i in self.person_list:
@@ -46,6 +54,7 @@ class RoomTests(TestCase):
                 self.assertFalse(value, "Room is adding extra people")
                 self.assertFalse(value)
             x += 1
+    
     def test_check_office_allocatable(self):
         x = 0
         for i in self.person_list:
@@ -57,16 +66,22 @@ class RoomTests(TestCase):
                 self.assertFalse(value, "Office is not meant to be allocatable at position "+str(x))
                 self.office.add_person(i)
             x += 1
+    
     def test_living_space_inherits_room(self):
         self.assertTrue(issubclass(LivingSpace, Room), "LivingSpace class doesnot inherit from the Room class")
+    
     def test_living_space_is_instance_of_LivingSpace(self):
         self.assertIsInstance(self.living_space, LivingSpace, "Object living_space is not an instance of class LivingSpace")
+    
     def test_name_attribute_in_living_space(self):
         self.assertEqual(self.living_space.name, self.name, "The value that is passed into name for living_space object and that returned, do not match")
+    
     def test_fixed_attributes_in_living_space(self):
         self.assertEqual(self.living_space.room_type, 'LIVINGSPACE', "LivingSpace doesnot contain any attribute type")
+    
     def test_allocate_list_in_living_space(self):
         self.assertTrue(isinstance(self.living_space.allocation_list, list), "There is no list allocate_list in office")
+    
     def test_allocate_list_values_in_living_space(self):
         x = 1
         for i in self.person_list:
@@ -77,6 +92,7 @@ class RoomTests(TestCase):
             else:
                 self.assertFalse(value, "Room is adding extra people")
             x += 1
+    
     def test_check_living_space_allocatable(self):
         x = 0
         for i in self.person_list:

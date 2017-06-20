@@ -17,6 +17,7 @@ from sqlalchemy import inspect
 
 
 class DatabaseTest(TestCase):
+    
     def setUp(self):
         self.db_schema = DbSchema()
         engine = create_engine("sqlite://")
