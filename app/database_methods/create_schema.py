@@ -57,35 +57,43 @@ class CreateSchema(object):
                         insert_stmt = self.db_schema.office_allocation.insert().values(staff_name=person.name, office_name=i)
                     result = self.conn.execute(insert_stmt)
                     print ('Resulting primary key: '+ str(result.inserted_primary_key)) 
+
     def load_offices(self):
         #office table
         select_stmt = select([self.db_schema.office.c.name])
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_living_space(self):
         select_stmt = select([self.db_schema.livingspace.c.name])
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_staff(self):
         select_stmt = select([self.db_schema.staff])
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_fellow(self):
         select_stmt = select([self.db_schema.fellow])
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_office_staff_allocations(self):
         select_stmt = select([self.db_schema.office_allocation]).where(self.db_schema.office_allocation.c.fellow_name == None)
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_office_fellow_allocations(self):
         select_stmt = select([self.db_schema.office_allocation]).where(self.db_schema.office_allocation.c.staff_name == None)
         result = self.conn.execute(select_stmt).fetchall()
         return result
+
     def load_office_allocations(self):
         select_stmt = select([self.db_schema.office_allocation])
         result = self.conn.execute(select_stmt).fetchall()
         return result
+        
     def load_living_space_allocations(self):
         select_stmt = select([self.db_schema.livingspace_allocation])
         result = self.conn.execute(select_stmt).fetchall()

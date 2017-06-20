@@ -11,6 +11,7 @@ models and database interaction files and also with the user interaction interfa
 
 
 class Dojo(object):
+    
     #Initializing the varibles that are used by the class
     def __init__(self):
         self.people_dict = {}
@@ -23,6 +24,7 @@ class Dojo(object):
         self.fellow_dict = {}
         self.staff_dict = {}
         self.unallocated_people = {}
+
     #Method to create a room
     def create_room(self, room_type, room_name):
         if isinstance(room_type, str):
@@ -42,6 +44,7 @@ class Dojo(object):
                 return False
         else:
             raise TypeError('Values inserted must both be strings')
+
     #Add a method to add a person
     def add_person(self, person_type, person_name):
         if isinstance(person_type, str):
@@ -59,6 +62,7 @@ class Dojo(object):
                 return False
         else:
             raise TypeError('Values inserted must both be strings')
+
     #Method to sort allocated rooms
     def sort_allocated_room(self, sample_dictionary, room_type):
         self.allocated_living_space = []
@@ -81,6 +85,7 @@ class Dojo(object):
                 else:
                     return False
         return True
+
     #Method to allocate rooms at random, it takes in a person objec and room type
     def allocate_rooms(self, person_object, room_type):
         if room_type is "OFFICE":
@@ -141,6 +146,7 @@ class Dojo(object):
                 return False
         else:
             return False
+
     #Method to find if person is already assigned to the dictionary
     def find_person(self, person_name, position):
         if position is "FELLOW":
@@ -153,6 +159,7 @@ class Dojo(object):
                 return True
             else:
                 return False
+
     #Method to get room occupants
     def room_occupants(self, room_name):
         if room_name in self.office_dict:
@@ -161,6 +168,7 @@ class Dojo(object):
             return self.living_space_dict[room_name].allocation_list
         else:
             return False
+
     #Method to get all room allocations
     def get_allocations(self):
         allocations_list = {}
@@ -171,13 +179,16 @@ class Dojo(object):
             if len(self.living_space_dict[i].allocation_list) > 0:
                 allocations_list[self.living_space_dict[i].name] = self.living_space_dict[i].allocation_list  
         return allocations_list
+
     #Method to get unallocated people 
     def get_unallocated_people(self):
         return self.unallocated_people
+
     #Method to save the state of the data into a database
     def save_state(self, db):
         create_schema = CreateSchema(db)
         create_schema.save_state(self.office_dict, self.living_space_dict, self.staff_dict, self.fellow_dict)
+        
     #Method to load data from the database
     def load_data(self, db):
         create_schema = CreateSchema(db)
