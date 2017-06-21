@@ -9,7 +9,7 @@ class DojoTests(TestCase):
     
     def setUp(self):
         self.living_space_rooms_names = ['la', 'lb', 'lc', 'ld', 'le', 'lf', 'lg', 'lh','li','lj','lk','ll','lm','ln','lo']
-        self.office_rooms_names = ['oz', 'oy', 'ox', 'ow', 'ov', 'ou', 'ot', 'os', 'or', 'oq']
+        self.office_rooms_names = ['oz', 'oy', 'ox', 'ow', 'ov']
         self.fellows_names = [
             'fa','fb','fc','fd','fe','ff','fg','fh','fi','fj',
             'fk','fl','fm','fn','fo','fp','fq','fr','fs','ft',
@@ -25,28 +25,6 @@ class DojoTests(TestCase):
         self.office_rooms = [Office(x) for x in self.office_rooms_names]
         self.list_fellows = [Fellow(x) for x in self.fellows_names]
         self.list_staffs = [Staff(x) for x in self.staff_names]
-        
-    
-    #Assign people to the rooms
-    def assign_living_space(self):
-        assigned_living_space = []
-        person_index = 0
-        for i in self.living_space_rooms: 
-            while True:
-                if person_index <= 25:
-                    if i.is_room_assignable():
-                        i.add_person(self.list_fellows[person_index])
-                        person_index += 1
-                    else:
-                        self.assertEqual(4, i.get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
-                        assigned_living_space.append(i)
-                        break 
-                else:
-                    break
-            if person_index == 26:
-                break
-        self.assertEqual(6,len(assigned_living_space), "Rooms assigned in the test method do not match the expected number")
-        return assigned_living_space
 
     def test_dojo_is_instance_of_Dojo(self):
         dojo = Dojo()
@@ -224,7 +202,7 @@ class DojoTests(TestCase):
         for items in self.living_space_rooms_names:
             value = dojo.create_room("LIVINGSPACE", items)
             self.assertTrue(value)
-        self.assertEqual(len(self.living_space_rooms_names), len(dojo.living_space_dict)-list_length, "Rooms added to the office list do not match the number inserted")
+        self.assertEqual(len(self.living_space_rooms_names), len(dojo.living_space_dict)-list_length, "Rooms added to the living space list do not match the number inserted")
         #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
         person_index = 0
         test_index = ""
@@ -275,5 +253,28 @@ class DojoTests(TestCase):
         self.assertLess( count + count2, len(value), "Not all the values were returned")
         self.assertTrue(isinstance(value, dict), 'The returned value should be a dictionary')
 
-    
-        
+
+    """
+    The functions below are used for computation purposes by the testing function
+    They are functions that are repeated across multiple test functions
+    """
+    #Assign people to the rooms
+    def assign_living_space(self):
+        assigned_living_space = []
+        person_index = 0
+        for i in self.living_space_rooms: 
+            while True:
+                if person_index <= 25:
+                    if i.is_room_assignable():
+                        i.add_person(self.list_fellows[person_index])
+                        person_index += 1
+                    else:
+                        self.assertEqual(4, i.get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
+                        assigned_living_space.append(i)
+                        break 
+                else:
+                    break
+            if person_index == 26:
+                break
+        self.assertEqual(6,len(assigned_living_space), "Rooms assigned in the test method do not match the expected number")
+        return assigned_living_space
