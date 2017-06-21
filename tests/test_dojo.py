@@ -25,9 +25,12 @@ class DojoTests(TestCase):
         self.office_rooms = [Office(x) for x in self.office_rooms_names]
         self.list_fellows = [Fellow(x) for x in self.fellows_names]
         self.list_staffs = [Staff(x) for x in self.staff_names]
-        #Assign people to the rooms
+        
+    
+    #Assign people to the rooms
+    def assign_living_space(self):
+        assigned_living_space = []
         person_index = 0
-        self.assigned_living_space = []
         for i in self.living_space_rooms: 
             while True:
                 if person_index <= 25:
@@ -36,13 +39,14 @@ class DojoTests(TestCase):
                         person_index += 1
                     else:
                         self.assertEqual(4, i.get_allocate_len(), "Maximum number of people assigned to living space does not match returned number")
-                        self.assigned_living_space.append(i)
+                        assigned_living_space.append(i)
                         break 
                 else:
                     break
             if person_index == 26:
                 break
-        self.assertEqual(6,len(self.assigned_living_space), "Rooms assigned in the test method do not match the expected number")
+        self.assertEqual(6,len(assigned_living_space), "Rooms assigned in the test method do not match the expected number")
+        return assigned_living_space
 
     def test_dojo_is_instance_of_Dojo(self):
         dojo = Dojo()
@@ -89,6 +93,7 @@ class DojoTests(TestCase):
    
     def test_unallocated_and_allocated_living_space(self):
         dojo = Dojo()
+        assigned_living_space = self.assign_living_space()
         initial_office_list_length = len(dojo.living_space_dict)  
         for items in self.living_space_rooms_names:
             dojo.create_room("LIVINGSPACE", items)
@@ -119,8 +124,8 @@ class DojoTests(TestCase):
         self.assertTrue(value, "The sorting stopped mid way, check the reason. Probable problem is you are passing wrong room_type")
         length_of_assigned_living_space_list = len(dojo.allocated_living_space)
         length_of_unassigned_living_space_list = len(dojo.unallocated_living_space)
-        self.assertEqual(length_of_assigned_living_space_list, len(self.assigned_living_space), "The living space dict was not properly sorted")
-        self.assertEqual(length_of_unassigned_living_space_list, len(self.living_space_rooms)-len(self.assigned_living_space), "The living space dict was not properly sorted")
+        self.assertEqual(length_of_assigned_living_space_list, len(assigned_living_space), "The living space dict was not properly sorted")
+        self.assertEqual(length_of_unassigned_living_space_list, len(self.living_space_rooms)-len(assigned_living_space), "The living space dict was not properly sorted")
     
     def test_add_person(self):
         dojo = Dojo()
@@ -269,4 +274,6 @@ class DojoTests(TestCase):
         value = dojo.get_allocations()
         self.assertLess( count + count2, len(value), "Not all the values were returned")
         self.assertTrue(isinstance(value, dict), 'The returned value should be a dictionary')
+
+    
         
