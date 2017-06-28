@@ -149,6 +149,19 @@ class Dojo(object):
         return self.unallocated_people
 
 
+    #Method to get the room type of inserted room
+    def get_room_type(self, room_name):
+        for room in self.office_dict:
+            if room == room_name:
+                return 'OFFICE'
+        
+        for room in self.living_space_dict:
+            if room == room_name:
+                return 'LIVINGSPACE'
+        
+        return False
+
+
     #Method to save the state of the data into a database
     def save_state(self, db):
         create_schema = CreateSchema(db)
