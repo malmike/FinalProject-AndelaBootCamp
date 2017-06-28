@@ -161,13 +161,21 @@ class AllocationsTests(TestCase):
         non_existant_room = self.dojo.get_room_type('blue')
         self.assertFalse(non_existant_room, 'This room is not supposed to exist')
     
+
     #Test for finding person in the various dictionaries
-    # def test_find_person(self):
-    #     self.dojo = Dojo()
-    #     self.create_living_space_rooms(10)
-    #     self.create_office_rooms(15)
-    #     self.create_fellows(26)
-    #     self.create_staff(15)
+    def test_get_room_assigned(self):
+        self.dojo = Dojo()
+        self.create_living_space_rooms(2)
+        self.create_fellows(26)
+        for person in self.dojo.fellow_dict:
+            self.room_allocation(self.dojo.fellow_dict[person], 'LIVINGSPACE')
+        
+        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', self.fellows_names[3])
+        self.assertIn(
+            self.dojo.fellow_dict[person], 
+            self.dojo.living_space_dict[room_allocated], 
+            'Verify that the person was allocated to the returned room'
+        )
 
 
     #Create list of classes for living space
