@@ -145,6 +145,29 @@ class AllocationsTests(TestCase):
             'The number of people that is expected to be unallocated doesnot match that returned'
         )
 
+
+    #Test to get the room type
+    def test_get_room_type(self):
+        self.dojo = Dojo()
+        room_number = 26
+        self.create_office_rooms(room_number)
+        self.create_living_space_rooms(room_number)
+        office_type = self.dojo.get_room_type(self.office_rooms_names[5])
+        self.assertEqual(office_type, 'OFFICE', 'Room type returned is not the expected room type')
+
+        living_space_type = self.dojo.get_room_type(self.living_space_rooms_names[5])
+        self.assertEqual(office_type, 'LIVINGSPACE', 'Room type returned is not the expected room type')
+
+    
+    #Test for finding person in the various dictionaries
+    # def test_find_person(self):
+    #     self.dojo = Dojo()
+    #     self.create_living_space_rooms(10)
+    #     self.create_office_rooms(15)
+    #     self.create_fellows(26)
+    #     self.create_staff(15)
+
+
     #Create list of classes for living space
     def create_living_space_rooms(self, room_number):
         living_space_count = len(self.dojo.living_space_dict)
