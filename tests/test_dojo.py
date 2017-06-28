@@ -94,24 +94,24 @@ class DojoTests(TestCase):
         self.assertEqual(new_fellow_count - initial_fellow_count, 0, "The value is being added to the fellow dictionary when it should not")
     
     #Test living space assignment using test data
-    def test_living_space_assignment(self):
-        dojo = Dojo()
-        assigned_living_space = self.assign_sample_room_objects('LIVINGSPACE')
-        self.create_multiple_rooms(dojo, 'LIVINGSPACE')
-        #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
-        self.assign_living_space(dojo)
-        value = dojo.sort_allocated_room(dojo.living_space_dict, 'LIVINGSPACE')
-        self.assertTrue(value, "The sorting stopped mid way, check the reason. Probable problem is you are passing wrong room_type")
-        self.assertEqual(
-            len(dojo.allocated_living_space), 
-            len(assigned_living_space), 
-            "The living space dict was not properly sorted"
-            )
-        self.assertEqual(
-            len(dojo.unallocated_living_space), 
-            len(self.living_space_rooms)-len(assigned_living_space), 
-            "The living space dict was not properly sorted"
-            )
+    # def test_living_space_assignment(self):
+    #     dojo = Dojo()
+    #     assigned_living_space = self.assign_sample_room_objects('LIVINGSPACE')
+    #     self.create_multiple_rooms(dojo, 'LIVINGSPACE')
+    #     #Insert test values into the living_space rooms in the dojo dictionary living_space_dict
+    #     self.assign_living_space(dojo)
+    #     value = dojo.sort_allocated_room(dojo.living_space_dict, 'LIVINGSPACE')
+    #     self.assertTrue(value, "The sorting stopped mid way, check the reason. Probable problem is you are passing wrong room_type")
+    #     self.assertEqual(
+    #         len(dojo.allocated_living_space), 
+    #         len(assigned_living_space), 
+    #         "The living space dict was not properly sorted"
+    #         )
+    #     self.assertEqual(
+    #         len(dojo.unallocated_living_space), 
+    #         len(self.living_space_rooms)-len(assigned_living_space), 
+    #         "The living space dict was not properly sorted"
+    #         )
 
     #Test room allocation
     def test_allocate_living_space_and_office(self):
@@ -154,6 +154,7 @@ class DojoTests(TestCase):
                 len(dojo.office_dict[item.name].allocation_list), 
                 "Values in the office dictionary do not match those in the unallocated office list"
                 )
+
     #Test to check that some one exists in the dictionary
     def test_person_exists_in_dict(self):
         dojo = Dojo()
@@ -164,7 +165,7 @@ class DojoTests(TestCase):
         self.assertFalse(value2, "Value 2 should not exist in the fellow dictionary")
     
     #Test to check for room occupants that are assigned to the room
-    def test_get_room_occupants(self):
+    def test_print_room(self):
         dojo = Dojo()
         blue_office = dojo.create_room('OFFICE', 'Blue')
         assigned_people = []
@@ -180,24 +181,7 @@ class DojoTests(TestCase):
         self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
         self.assertFalse(value, 'The room put should not exist in the office dictionary')
     
-    #Test to check room occupants
-    def test_get_room_occupants(self):
-        dojo = Dojo()
-        blue_office = dojo.create_room('OFFICE', 'Blue')
-        assigned_people = []
-        for i in self.list_fellows:
-            if dojo.office_dict['Blue'].is_room_assignable():
-                dojo.office_dict['Blue'].add_person(i)
-                assigned_people.append(i)
-            else:
-                break
-        self.assertEqual(len(dojo.office_dict['Blue'].allocation_list), len(assigned_people), 'Test values do not match')
-        list_items = dojo.room_occupants('Blue')
-        value = dojo.room_occupants('test')
-        self.assertListEqual(list_items, assigned_people, 'The values returned should match those in the test list')
-        self.assertFalse(value, 'The room put should not exsit in the office dictionary')
-    
-    def test_get_room_allocations(self):
+    def test_print_allocations(self):
         dojo = Dojo()
         self.create_multiple_rooms(dojo, 'LIVINGSPACE')
         self.add_multiple_people(dojo, "FELLOW")
@@ -209,7 +193,12 @@ class DojoTests(TestCase):
         self.assertLess( count + count2, len(value), "Not all the values were returned")
         self.assertTrue(isinstance(value, dict), 'The returned value should be a dictionary')
 
-
+    def test_unallocated_office(self):
+        dojo = Dojo()
+        self.create_multiple_rooms(dojo, 'OFFICE')
+        self.add_multiple_people(dojo, 'STAFF')
+        
+        
     """
     The functions below are used for computation purposes by the testing function
     They are functions that are repeated across multiple test functions
