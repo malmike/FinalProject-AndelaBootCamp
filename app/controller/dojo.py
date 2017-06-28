@@ -63,28 +63,6 @@ class Dojo(object):
         else:
             raise TypeError('Values inserted must both be strings')
 
-    #Method to sort allocated rooms
-    def sort_allocated_room(self, sample_dictionary, room_type):
-        self.allocated_living_space = []
-        self.unallocated_living_space = []
-        #Sort through the dictionary of rooms and get allocatable and unallocatable rooms
-        #It sorts based on office and living space
-        for item in sample_dictionary:
-            if sample_dictionary[item].is_room_assignable():
-                if room_type is "LIVINGSPACE":
-                    self.unallocated_living_space.append(item)
-                elif room_type is "OFFICE":
-                    self.unallocated_offices.append(item)
-                else:
-                    return False
-            else:
-                if room_type is "LIVINGSPACE":
-                    self.allocated_living_space.append(item)
-                elif room_type is "OFFICE":
-                    self.allocated_offices.append(item)
-                else:
-                    return False
-        return True
 
     #Method to get unallocated rooms
     def get_unallocated_rooms(self, room_type):
