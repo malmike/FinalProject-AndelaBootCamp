@@ -70,11 +70,14 @@ class AllocationsTests(TestCase):
     #Test to check offices that still have unassigned places
     def test_get_unallocated_offices(self):
         self.dojo = Dojo()
-        office_allocations_count = self.assign_sample_offices('STAFF', 10, 26)["count"]
+        room_number = 20
+        staff_number = 26
+        office_allocations_count = self.assign_sample_offices('STAFF', room_number, staff_number)["count"]
         unallocated_offices = self.dojo.get_unallocated_rooms('OFFICE')
+        self.assertIsInstance(unallocated_offices, list, 'A list should be returned if they are still unallocated offices')
         self.assertEqual(
             len(unallocated_offices), 
-            10-office_allocations_count, 
+            room_number-office_allocations_count, 
             'Unallocated rooms doesnot match the expected number'
         )
 
