@@ -43,40 +43,6 @@ class DojoTests(TestCase):
         dojo = Dojo()
         self.assertTrue(isinstance(dojo.people_dict, dict), "Class dojo doesnot contain any dictionary people_dict")
 
-    #Test that the Dojo can create an office and add it to the office dictionary
-    #Test that the Dojo does not allow for duplicate offices being created
-    def test_add_create_office_and_repeated_room(self):
-        dojo = Dojo()
-        #Check whether one office room can be created
-        initial_office_count = len(dojo.office_dict)
-        blue_office = dojo.create_room('OFFICE', 'Blue')
-        self.assertTrue(blue_office, "Room has not been created")
-        new_office_count = len(dojo.office_dict)
-        self.assertEqual(new_office_count - initial_office_count, 1, "Multiple values are being added to the office dictionary. Why is that!!!")
-        #Check whether the same office room can be created
-        initial_office_count = len(dojo.office_dict)
-        blue_office2 = dojo.create_room('OFFICE', 'Blue')
-        self.assertFalse(blue_office2, "Repeated room being created")
-        new_office_count = len(dojo.office_dict)
-        self.assertEqual(new_office_count - initial_office_count, 0, "The value is being added to the office dictionary when it should not")
-    
-    #Test that the Dojo can create a living space and add it to the living space dictionary
-    #Test that the Dojo does not allow for duplicate living spaces being created
-    def test_add_create_living_space_and_repeated_room(self):
-        dojo = Dojo()
-        #Check whether one living space room can be created
-        initial_room_count = len(dojo.living_space_dict)
-        blue_living_space = dojo.create_room('LIVINGSPACE', 'Blue')
-        self.assertTrue(blue_living_space, "Room has not been created")
-        new_room_count = len(dojo.living_space_dict)
-        self.assertEqual(new_room_count - initial_room_count, 1, "Multiple values are being added to the living space dictionary. Why is that!!!")
-        #Check whether the same living space room can be created
-        initial_room_count = len(dojo.living_space_dict)
-        blue_living_space2 = dojo.create_room('LIVINGSPACE', 'Blue')
-        self.assertFalse(blue_living_space2, "Repeated room being created")
-        new_room_count = len(dojo.living_space_dict)
-        self.assertEqual(new_room_count - initial_room_count, 0, "The value is being added to the living space dictionary when it should not")
-    
     #Test add that the Dojo can create a fellow or staff and them to the fellow or staff dictionary 
     def test_add_person(self):
         dojo = Dojo()
