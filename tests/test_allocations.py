@@ -127,6 +127,24 @@ class AllocationsTests(TestCase):
         )
 
 
+    #Test unallocated people
+    def test_unallocated_people(self):
+        self.dojo = Dojo()
+        room_number = 2
+        fellow_number = 26
+        expected_allocations = 12
+        self.create_office_rooms(room_number)
+        self.create_fellows(fellow_number)
+        for person in self.dojo.fellow_dict:
+            self.room_allocation(self.dojo.fellow_dict[person], 'OFFICE')
+        
+        unallocated_list = self.dojo.get_unallocated_people()
+        self.assertEqual(
+            fellow_number-expected_allocations,
+            len(unallocated_list),
+            'The number of people that is expected to be unallocated doesnot match that returned'
+        )
+
     #Create list of classes for living space
     def create_living_space_rooms(self, room_number):
         living_space_count = len(self.dojo.living_space_dict)
