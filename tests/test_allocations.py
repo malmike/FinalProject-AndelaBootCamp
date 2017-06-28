@@ -66,6 +66,19 @@ class AllocationsTests(TestCase):
         expected_allocations_list.update(office_allocations)
         self.assertEqual(len(expected_allocations_list), len(assigned_allocations), 'List doesnot match')
 
+
+    #Test to check offices that still have unassigned places
+    def test_get_unallocated_offices(self):
+        self.dojo = Dojo()
+        office_allocations_count = self.assign_sample_offices('STAFF', 10, 26)["count"]
+        unallocated_offices = self.dojo.get_unallocated_rooms('OFFICE')
+        self.assertEqual(
+            len(unallocated_offices), 
+            10-office_allocations_count, 
+            'Unallocated rooms doesnot match the expected number'
+        )
+
+
     #Create list of classes for living space
     def create_living_space_rooms(self, room_number):
         living_space_count = len(self.dojo.living_space_dict)
