@@ -150,7 +150,16 @@ class Dojo(object):
 
     #Method to retrieve the room an individual is assigned
     def get_room_assigned(self, room_type, person_name):
-        pass
+        if isinstance(room_type, str) and isinstance(person_name, str):
+            if room_type.upper() == 'OFFICE':
+                pass
+            elif room_type.upper() == 'LIVINGSPACE':
+                pass
+            else:
+                raise ValueError('Room Type must either be OFFICE or LIVINGSPACE')
+
+        else:
+            raise TypeError('Room Type must be a string')
 
 
 
