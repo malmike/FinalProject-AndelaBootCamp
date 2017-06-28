@@ -26,12 +26,12 @@ class Dojo(object):
     def create_room(self, room_type, room_name):
         if isinstance(room_type, str):
             #Create an office room and add it to office list
-            if room_type == "OFFICE" and room_name not in self.office_dict:
+            if room_type == "OFFICE" and room_name not in self.office_dict and room_name not in self.living_space_dict:
                 office = Office(room_name)
                 self.office_dict[room_name] = office
                 return office
             #Create livingspace room and add it to livingspace list
-            elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
+            elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict and room_name not in self.office_dict:
                 living_space = LivingSpace(room_name)
                 self.living_space_dict[room_name] = living_space
                 return living_space
@@ -45,12 +45,12 @@ class Dojo(object):
     def add_person(self, person_type, person_name):
         if isinstance(person_type, str):
             #Add a fellow and add to the fellow list
-            if person_type == "FELLOW" and person_name not in self.fellow_dict:
+            if person_type == "FELLOW" and person_name not in self.fellow_dict and person_name not in self.staff_dict:
                 fellow = Fellow(person_name)
                 self.fellow_dict[person_name] = fellow
                 return fellow
             #Add a staff and add to the staff list
-            elif person_type == "STAFF" and person_name not in self.staff_dict:
+            elif person_type == "STAFF" and person_name not in self.staff_dict and person_name not in self.fellow_dict:
                 staff = Staff(person_name)
                 self.staff_dict[person_name] = staff
                 return staff
