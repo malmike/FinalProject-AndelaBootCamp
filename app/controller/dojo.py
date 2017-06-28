@@ -97,7 +97,7 @@ class Dojo(object):
                         unallocated_rooms.append(room)
             elif room_type.upper() == 'LIVINGSPACE':
                 for room in self.living_space_dict:
-                    if self.living_space_dict[room].is_room_assignable:
+                    if self.living_space_dict[room].is_room_assignable():
                         unallocated_rooms.append(room)
             else:
                 raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
