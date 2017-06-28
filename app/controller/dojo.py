@@ -19,7 +19,7 @@ class Dojo(object):
         self.living_space_dict = {}
         self.fellow_dict = {}
         self.staff_dict = {}
-        self.unallocated_people = {}
+        self.unallocated_people = {'OFFICE':[], 'LIVINGSPACE':[]}
 
 
     #Method to create a room
@@ -104,7 +104,7 @@ class Dojo(object):
             else:
                 raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
         else:
-            self.unallocated_people[person_object.name] = person_object
+            self.unallocated_people[room_type.upper()].append(person_object)
             return False
 
 
