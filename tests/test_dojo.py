@@ -43,22 +43,6 @@ class DojoTests(TestCase):
         dojo = Dojo()
         self.assertTrue(isinstance(dojo.people_dict, dict), "Class dojo doesnot contain any dictionary people_dict")
 
-    #Test add that the Dojo can create a fellow or staff and them to the fellow or staff dictionary 
-    def test_add_person(self):
-        dojo = Dojo()
-        #Check whether one person room can be created
-        initial_fellow_count = len(dojo.fellow_dict)
-        malmike_fellow = dojo.add_person('FELLOW', 'Male Michael')
-        self.assertTrue(malmike_fellow, "Fellow has not been created")
-        new_fellow_count = len(dojo.fellow_dict)
-        self.assertEqual(new_fellow_count - initial_fellow_count, 1, "Multiple values are being added to the fellow dictionary. Why is that!!!")
-        #Check whether the same office room can be created
-        initial_fellow_count = len(dojo.fellow_dict)
-        malmike_fellow2 = dojo.add_person('FELLOW', 'Male Michael')
-        self.assertFalse(malmike_fellow2, "Repeated fellow being created")
-        new_fellow_count = len(dojo.fellow_dict)
-        self.assertEqual(new_fellow_count - initial_fellow_count, 0, "The value is being added to the fellow dictionary when it should not")
-    
     #Test living space assignment using test data
     # def test_living_space_assignment(self):
     #     dojo = Dojo()
