@@ -97,6 +97,36 @@ class AllocationsTests(TestCase):
         )
 
 
+    #Test office allocation
+    def test_office_allocation(self):
+        self.dojo = Dojo()
+        room_number = 10
+        staff_number = 1
+        self.create_office_rooms(room_number)
+        self.create_staff(staff_number)
+        room_allocated = self.room_allocation(self.dojo.staff_dict[self.staff_names[0]], 'OFFICE')
+        self.assertIn(
+            self.dojo.staff_dict[self.staff_names[0]], 
+            self.dojo.office_dict[room_allocated].allocation_list, 
+            'Allocation failed'
+        )
+
+
+    #Test office allocation
+    def test_living_space_allocation(self):
+        self.dojo = Dojo()
+        room_number = 10
+        fellow_number = 1
+        self.create_living_space_rooms(room_number)
+        self.create_fellows(fellow_number)
+        room_allocated = self.room_allocation(self.dojo.fellow_dict[self.fellows_names[0]], 'LIVINGSPACE')
+        self.assertIn(
+            self.dojo.fellow_dict[self.fellows_names[0]], 
+            self.dojo.living_space_dict[room_allocated].allocation_list, 
+            'Allocation failed'
+        )
+
+
     #Create list of classes for living space
     def create_living_space_rooms(self, room_number):
         living_space_count = len(self.dojo.living_space_dict)
@@ -202,3 +232,7 @@ class AllocationsTests(TestCase):
         
         return { "count":count, "room_assignment":room_assignment}
             
+
+    #Method for allocating rooms
+    def room_allocation(self, person_object, room_type):
+        return self.dojo.allocate_rooms(person_object, room_type)
