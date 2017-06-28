@@ -88,7 +88,24 @@ class Dojo(object):
 
     #Method to get unallocated rooms
     def get_unallocated_rooms(self, room_type):
-        pass
+        unallocated_rooms = []
+        if isinstance(room_type, str):
+            #sort though the office/ living space dictionary and get unallocated rooms
+            if room_type.upper() == 'OFFICE':
+                for room in self.office_dict:
+                    if self.office_dict[room].is_room_assignable():
+                        unallocated_rooms.append(room)
+            elif room_type.upper() == 'LIVINGSPACE':
+                for room in self.living_space_dict:
+                    if self.living_space_dict[room].is_room_assignable:
+                        unallocated_rooms.append(room)
+            else:
+                raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
+
+            return unallocated_rooms
+            
+        else:
+            raise TypeError('Room Type must be a string')
 
 
     #Method to allocate rooms at random, it takes in a person objec and room type
