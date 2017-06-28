@@ -86,6 +86,11 @@ class Dojo(object):
                     return False
         return True
 
+    #Method to get unallocated rooms
+    def get_unallocated_rooms(self, room_type):
+        pass
+
+
     #Method to allocate rooms at random, it takes in a person objec and room type
     def allocate_rooms(self, person_object, room_type):
         if room_type is "OFFICE":
