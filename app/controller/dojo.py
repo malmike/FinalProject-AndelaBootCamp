@@ -11,11 +11,10 @@ models and database interaction files and also with the user interaction interfa
 
 
 class Dojo(object):
-  
-    
+
+
     #Initializing the varibles that are used by the class
     def __init__(self):
-        self.people_dict = {}
         self.office_dict = {}
         self.living_space_dict = {}
         self.fellow_dict = {}
