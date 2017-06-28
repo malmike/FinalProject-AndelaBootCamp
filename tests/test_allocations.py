@@ -156,8 +156,10 @@ class AllocationsTests(TestCase):
         self.assertEqual(office_type, 'OFFICE', 'Room type returned is not the expected room type')
 
         living_space_type = self.dojo.get_room_type(self.living_space_rooms_names[5])
-        self.assertEqual(office_type, 'LIVINGSPACE', 'Room type returned is not the expected room type')
+        self.assertEqual(living_space_type, 'LIVINGSPACE', 'Room type returned is not the expected room type')
 
+        non_existant_room = self.dojo.get_room_type('blue')
+        self.assertFalse(non_existant_room, 'This room is not supposed to exist')
     
     #Test for finding person in the various dictionaries
     # def test_find_person(self):
