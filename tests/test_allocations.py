@@ -141,7 +141,7 @@ class AllocationsTests(TestCase):
         unallocated_list = self.dojo.get_unallocated_people()
         self.assertEqual(
             fellow_number-expected_allocations,
-            len(unallocated_list),
+            len(unallocated_list['OFFICE']),
             'The number of people that is expected to be unallocated doesnot match that returned'
         )
 
