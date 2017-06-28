@@ -81,6 +81,21 @@ class AllocationsTests(TestCase):
             'Unallocated rooms doesnot match the expected number'
         )
 
+    
+    #Test to check living spaces that still have unassigned places
+    def test_get_unallocated_living_spaces(self):
+        self.dojo = Dojo()
+        room_number = 10
+        fellow_number = 26
+        living_space_allocation_count = self.assign_sample_living_space( room_number, fellow_number)["count"]
+        unallocated_living_spaces = self.dojo.get_unallocated_rooms('LIVINGSPACE')
+        self.assertIsInstance(unallocated_living_spaces, list, 'A list should be returned if they are still unallocated living spaces')
+        self.assertEqual(
+            len(unallocated_living_spaces), 
+            room_number-living_space_allocation_count, 
+            'Unallocated rooms doesnot match the expected number'
+        )
+
 
     #Create list of classes for living space
     def create_living_space_rooms(self, room_number):
