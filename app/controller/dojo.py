@@ -108,20 +108,6 @@ class Dojo(object):
             return False
 
 
-    #Method to find if person is already assigned to the dictionary
-    def find_person(self, person_name, position):
-        if position is "FELLOW":
-            if person_name in self.fellow_dict:
-                return True
-            else:
-                return False
-        if position is "STAFF":
-            if person_name in self.staff_dict:
-                return True
-            else:
-                return False
-
-
     #Method to get room occupants
     def room_occupants(self, room_name):
         if room_name in self.office_dict:
@@ -160,6 +146,12 @@ class Dojo(object):
                 return 'LIVINGSPACE'
         
         return False
+
+
+    #Method to retrieve the room an individual is assigned
+    def get_room_assigned(self, room_type, person_name):
+        pass
+
 
 
     #Method to save the state of the data into a database
