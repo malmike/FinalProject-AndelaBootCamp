@@ -1,9 +1,5 @@
 from unittest import TestCase
 from app.controller.dojo import Dojo
-from app.models.living_space import LivingSpace
-from app.models.office import Office
-from app.models.fellow import Fellow
-from app.models.staff import Staff
 
 class DojoTests(TestCase):
     
@@ -24,8 +20,8 @@ class DojoTests(TestCase):
     #Test that the Dojo class a dictionary of all people
     def test_dojo_has_dict_of_people(self):
         dojo = Dojo()
-        self.assertTrue(isinstance(dojo.people_dict, dict), "Class dojo doesnot contain any dictionary people_dict")
-
+        self.assertTrue(isinstance(dojo.staff_dict, dict), "Class dojo doesnot contain any dictionary staff_dict")
+        self.assertTrue(isinstance(dojo.fellow_dict, dict), "Class dojo doesnot contain any dictionary fellow_dict")
 
     
     
