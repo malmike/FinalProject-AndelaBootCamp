@@ -11,19 +11,17 @@ models and database interaction files and also with the user interaction interfa
 
 
 class Dojo(object):
+  
     
     #Initializing the varibles that are used by the class
     def __init__(self):
         self.people_dict = {}
         self.office_dict = {}
         self.living_space_dict = {}
-        self.unallocated_offices = []
-        self.allocated_offices = []
-        self.unallocated_living_space = []
-        self.allocated_living_space = []
         self.fellow_dict = {}
         self.staff_dict = {}
         self.unallocated_people = {}
+
 
     #Method to create a room
     def create_room(self, room_type, room_name):
@@ -32,18 +30,17 @@ class Dojo(object):
             if room_type == "OFFICE" and room_name not in self.office_dict:
                 office = Office(room_name)
                 self.office_dict[room_name] = office
-                self.unallocated_offices.append(office)
                 return office
             #Create livingspace room and add it to livingspace list
             elif room_type == "LIVINGSPACE" and room_name not in self.living_space_dict:
                 living_space = LivingSpace(room_name)
                 self.living_space_dict[room_name] = living_space
-                self.unallocated_living_space.append(living_space)
                 return living_space
             else:
                 return False
         else:
             raise TypeError('Values inserted must both be strings')
+
 
     #Add a method to add a person
     def add_person(self, person_type, person_name):
@@ -88,64 +85,29 @@ class Dojo(object):
 
     #Method to allocate rooms at random, it takes in a person objec and room type
     def allocate_rooms(self, person_object, room_type):
-        if room_type is "OFFICE":
-            #Checks that the unallocated room list is not empty
-            if len(self.unallocated_offices) > 0:   
-                #Choose an index of a random room
-                index = random.choice(range(len(self.unallocated_offices)))
-                #Assign it a person
-                value = self.unallocated_offices[index].add_person(person_object)
-                #Check that it has inserted the person
+        unallocated_rooms = self.get_unallocated_rooms(room_type)
+
+        if unallocated_rooms:
+            if room_type == "OFFICE":
+                index = random.choice(range(len(unallocated_rooms)))
+                value = self.office_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    #Check if the room is full causing it to fail to allocate
-                    if not self.unallocated_offices[index].is_room_assignable:
-                        self.allocated_offices.append(self.unallocated_offices[index])
-                        del self.unallocated_offices[index]
-                    #Call the allocate room method again and try to allocate the person
-                    return self.allocate_rooms(person_object, room_type)
+                    return value
                 else:
-                    #The person is allocated, so persist the data in the general list of the offices
-                    self.office_dict[self.unallocated_offices[index].name] = self.unallocated_offices[index]
-                    allocation_office_name = self.unallocated_offices[index].name
-                    #Check if the room has reached capacity and if so, transfer the room to the allocated list
-                    if not self.unallocated_offices[index].is_room_assignable:
-                        self.allocated_offices.append(self.unallocated_offices[index])
-                        del self.unallocated_offices[index]
-                    #Return the room name in which the person has been allocated
-                    return allocation_office_name
-            else:
-                self.unallocated_people['OFFICE'] = person_object
-                return False
-        #Options for allocating living space
-        elif room_type is "LIVINGSPACE":
-            #Check that there are rooms available for which one can be allocated
-            if len(self.unallocated_living_space) > 0:
-                #Pick random index that is used for assigning the room
-                index = random.choice(range(len(self.unallocated_living_space)))
-                #Allocate the person to the room
-                value = self.unallocated_living_space[index].add_person(person_object)
-                #Verify that the person has been allocated, otherwise call the allocate room functiom such that it can try to allocate again
+                    return unallocated_rooms[index]
+            elif room_type == "LIVINGSPACE":
+                index = random.choice(range(len(unallocated_rooms)))
+                value = self.living_space_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    
-                    if not self.unallocated_living_space[index].is_room_assignable:
-                        self.allocated_living_space.append(self.unallocated_living_space[index])
-                        del self.unallocated_living_space[index]
-                    return self.allocate_rooms(person_object, room_type)
+                    return value
                 else:
-                    #Adjust the values of the room object held in the living space dictionary
-                    self.living_space_dict[self.unallocated_living_space[index].name] = self.unallocated_living_space[index]
-                    allocation_living_space_name = self.unallocated_living_space[index].name
-                    #Check that the room is still allocatable otherwise move it to the allocated list
-                    if not self.unallocated_living_space[index].is_room_assignable:
-                        self.allocated_living_space.append(self.unallocated_living_space[index])
-                        del self.unallocated_living_space[index]
-                    return allocation_living_space_name
+                    return unallocated_rooms[index]
             else:
-                #Add those that cannot be allocated to an unallocated list
-                self.unallocated_people['LIVINGSPACE'] = person_object
-                return False
+                raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
         else:
+            self.unallocated_people[person_object.name] = person_object
             return False
+
 
     #Method to find if person is already assigned to the dictionary
     def find_person(self, person_name, position):
@@ -160,6 +122,7 @@ class Dojo(object):
             else:
                 return False
 
+
     #Method to get room occupants
     def room_occupants(self, room_name):
         if room_name in self.office_dict:
@@ -168,6 +131,7 @@ class Dojo(object):
             return self.living_space_dict[room_name].allocation_list
         else:
             return False
+
 
     #Method to get all room allocations
     def get_allocations(self):
@@ -180,15 +144,18 @@ class Dojo(object):
                 allocations_list[self.living_space_dict[i].name] = self.living_space_dict[i].allocation_list  
         return allocations_list
 
+
     #Method to get unallocated people 
     def get_unallocated_people(self):
         return self.unallocated_people
+
 
     #Method to save the state of the data into a database
     def save_state(self, db):
         create_schema = CreateSchema(db)
         create_schema.save_state(self.office_dict, self.living_space_dict, self.staff_dict, self.fellow_dict)
-        
+
+
     #Method to load data from the database
     def load_data(self, db):
         create_schema = CreateSchema(db)
