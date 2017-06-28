@@ -27,6 +27,7 @@ This system will be used to automatically allocate spaces to people at random.
 - add_person <first_name> <last_name> \<position> [\<Y> | \<N>]
 - print_room <room_name>
 - print_allocations [-o \<filename>]
+- print_unallocated [-o \<filename>]
 - save_state [--db <sqlite_database>]
 - save_state <sqlite_database>
 
