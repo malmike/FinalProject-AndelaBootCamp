@@ -91,14 +91,14 @@ class Dojo(object):
                 index = random.choice(range(len(unallocated_rooms)))
                 value = self.office_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    return 'Test1'
+                    return self.allocate_rooms(person_object, room_type)
                 else:
                     return unallocated_rooms[index]
             elif room_type == "LIVINGSPACE":
                 index = random.choice(range(len(unallocated_rooms)))
                 value = self.living_space_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    return 'Test1'
+                    return self.allocate_rooms(person_object, room_type)
                 else:
                     return unallocated_rooms[index]
             else:
