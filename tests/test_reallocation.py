@@ -159,3 +159,40 @@ class ReallocationsTests(TestCase):
             self.dojo.living_space_dict[room_allocated].allocation_list, 
             'Verify that the person was unallocated from the returned room'
         )
+
+    #Test for assigning person to living space
+    def test_assign_individual_living_space(self):
+        self.dojo = Dojo()
+        general_computations = GeneralComputations(self.dojo)
+        general_computations.create_living_space_rooms(10)
+        general_computations.create_fellows(26)
+        self.dojo.assign_individual_room(
+            'LIVINGSPACE',
+            general_computations.living_space_rooms_names[5],
+            self.dojo.fellow_dict[general_computations.fellows_names[10]]
+        )
+
+        self.assertIn(
+            self.dojo.fellow_dict[general_computations.fellows_names[10]],
+            self.dojo.living_space_dict[general_computations.living_space_rooms_names[5]].allocation_list,
+            'The room was not assigned. Check you room assignment computation'
+        )
+
+    
+    #Test for assigning person to office
+    def test_assign_individual_living_space(self):
+        self.dojo = Dojo()
+        general_computations = GeneralComputations(self.dojo)
+        general_computations.create_office_rooms(10)
+        general_computations.create_staff(26)
+        self.dojo.assign_individual_room(
+            'OFFICE',
+            general_computations.office_rooms_names[5],
+            self.dojo.staff_dict[general_computations.staff_names[10]]
+        )
+
+        self.assertIn(
+            self.dojo.staff_dict[general_computations.staff_names[10]],
+            self.dojo.office_dict[general_computations.office_rooms_names[5]].allocation_list,
+            'The room was not assigned. Check you room assignment computation'
+        )
