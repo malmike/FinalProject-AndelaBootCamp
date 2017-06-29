@@ -188,7 +188,12 @@ class Dojo(object):
     #Method to unallocate someone from a room
     def unallocate_room(self, room_type, room_allocated, person_object):
         if isinstance(room_type, str) and isinstance(room_allocated, str):
-            pass
+            if room_type.upper() == 'LIVINGSPACE':
+                self.living_space_dict[room_allocated].allocation_list.remove(person_object)
+            elif room_type.upper() == 'OFFICE':
+                self.office_dict[room_allocated].allocation_list.remove(person_object)
+            else:
+                raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
         else:
             raise TypeError('Room Type and Room Allocated should be strings')
 
