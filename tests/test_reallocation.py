@@ -39,7 +39,7 @@ class ReallocationsTests(TestCase):
             if allocated_room:
                 allocated_person = person
         
-        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', allocated_person)
+        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', allocated_person)["room"]
         self.assertIn(
             self.dojo.fellow_dict[allocated_person], 
             self.dojo.living_space_dict[room_allocated].allocation_list, 
@@ -59,7 +59,7 @@ class ReallocationsTests(TestCase):
             if not allocated_room:
                 unallocated_person = person
 
-        unallocated = self.dojo.get_room_assigned('LIVINGSPACE', unallocated_person)
+        unallocated = self.dojo.get_room_assigned('LIVINGSPACE', unallocated_person)["person"]
         self.assertIn(
             unallocated, 
             self.dojo.unallocated_people['LIVINGSPACE'], 
@@ -79,7 +79,7 @@ class ReallocationsTests(TestCase):
             if allocated_room:
                 allocated_person = person
         
-        room_allocated = self.dojo.get_room_assigned('OFFICE', allocated_person)
+        room_allocated = self.dojo.get_room_assigned('OFFICE', allocated_person)["room"]
         self.assertIn(
             self.dojo.staff_dict[allocated_person], 
             self.dojo.office_dict[room_allocated].allocation_list, 
@@ -99,7 +99,7 @@ class ReallocationsTests(TestCase):
             if not allocated_room:
                 unallocated_person = person
 
-        unallocated = self.dojo.get_room_assigned('OFFICE', unallocated_person)
+        unallocated = self.dojo.get_room_assigned('OFFICE', unallocated_person)["person"]
         self.assertIn(
             unallocated, 
             self.dojo.unallocated_people['OFFICE'], 
@@ -119,7 +119,7 @@ class ReallocationsTests(TestCase):
             if allocated_room:
                 allocated_person = person
         
-        room_allocated = self.dojo.get_room_assigned('OFFICE', allocated_person)
+        room_allocated = self.dojo.get_room_assigned('OFFICE', allocated_person)["room"]
         self.assertIn(
             self.dojo.staff_dict[allocated_person], 
             self.dojo.office_dict[room_allocated].allocation_list, 
@@ -146,7 +146,7 @@ class ReallocationsTests(TestCase):
             if allocated_room:
                 allocated_person = person
         
-        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', allocated_person)
+        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', allocated_person)["room"]
         self.assertIn(
             self.dojo.fellow_dict[allocated_person], 
             self.dojo.living_space_dict[room_allocated].allocation_list, 

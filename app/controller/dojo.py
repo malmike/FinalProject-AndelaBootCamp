@@ -154,26 +154,27 @@ class Dojo(object):
             if room_type.upper() == 'OFFICE':
                 for person in self.unallocated_people['OFFICE']:
                     if person.name == person_name:
-                        return person
+                        return { "person": person, "room": None }
                 
                 for room in self.office_dict:
                     if self.office_dict[room].allocation_list:
                         for person in self.office_dict[room].allocation_list:
                             if person.name == person_name:
-                                return room
+                                return { "person": person, "room": room }
 
                 return False
+
             elif room_type.upper() == 'LIVINGSPACE':
                 for person in self.unallocated_people['LIVINGSPACE']:
                     if person.name == person_name:
-                        return person
+                        return { "person": person, "room": None }
                 
                 
                 for room in self.living_space_dict:
                     if self.living_space_dict[room].allocation_list:
                         for person in self.living_space_dict[room].allocation_list:
                             if person.name == person_name:
-                                return room
+                                return { "person": person, "room": room }
                 
                 return False
 
@@ -221,7 +222,6 @@ class Dojo(object):
                 raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
         else:
             raise TypeError('Room Type and Room Name must be of type string')
-
 
 
     #Method to save the state of the data into a database
