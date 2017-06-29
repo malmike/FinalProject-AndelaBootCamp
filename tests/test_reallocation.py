@@ -126,7 +126,7 @@ class ReallocationsTests(TestCase):
             'Verify that the person was allocated to the returned room'
         )
     
-        self.dojo.unallocate_room(room_type, room_allocated, self.dojo.staff_dict[allocated_person])
+        self.dojo.unallocate_room("OFFICE", room_allocated, self.dojo.staff_dict[allocated_person])
         self.assertNotIn(
             self.dojo.staff_dict[allocated_person], 
             self.dojo.office_dict[room_allocated].allocation_list, 
@@ -153,7 +153,7 @@ class ReallocationsTests(TestCase):
             'Verify that the person was allocated to the returned room'
         )
 
-        self.dojo.unallocate_room(room_type, room_allocated, self.dojo.fellow_dict[allocated_person])
+        self.dojo.unallocate_room("LIVINGSPACE", room_allocated, self.dojo.fellow_dict[allocated_person])
         self.assertNotIn(
             self.dojo.fellow_dict[allocated_person], 
             self.dojo.living_space_dict[room_allocated].allocation_list, 
