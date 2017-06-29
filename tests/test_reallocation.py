@@ -166,11 +166,12 @@ class ReallocationsTests(TestCase):
         general_computations = GeneralComputations(self.dojo)
         general_computations.create_living_space_rooms(10)
         general_computations.create_fellows(26)
-        self.dojo.assign_individual_room(
+        value = self.dojo.assign_individual_room(
             'LIVINGSPACE',
             general_computations.living_space_rooms_names[5],
             self.dojo.fellow_dict[general_computations.fellows_names[10]]
         )
+        self.assertTrue(value, 'Why is the individual not being assigned to the living space room')
 
         self.assertIn(
             self.dojo.fellow_dict[general_computations.fellows_names[10]],
@@ -180,16 +181,18 @@ class ReallocationsTests(TestCase):
 
     
     #Test for assigning person to office
-    def test_assign_individual_living_space(self):
+    def test_assign_individual_office(self):
         self.dojo = Dojo()
         general_computations = GeneralComputations(self.dojo)
         general_computations.create_office_rooms(10)
         general_computations.create_staff(26)
-        self.dojo.assign_individual_room(
+        value = self.dojo.assign_individual_room(
             'OFFICE',
             general_computations.office_rooms_names[5],
             self.dojo.staff_dict[general_computations.staff_names[10]]
         )
+        self.assertTrue(value, 'Why is the individual not being assigned to the office room')
+
 
         self.assertIn(
             self.dojo.staff_dict[general_computations.staff_names[10]],
