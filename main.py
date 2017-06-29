@@ -5,6 +5,7 @@
         TheDojo add_person <first_name> <last_name> <position> [<Y> | <N>]
         TheDojo print_room <room_name>
         TheDojo print_allocations [-o <filename>]
+        TheDojo print_unallocated [-o <filename>]
         TheDojo save_state [--db <sqlite_database>]
         TheDojo save_state <sqlite_database>
         TheDojo -h | --help
@@ -59,10 +60,13 @@ def docopt_cmd(func):
     return fn
 
 class TheDojo(cmd.Cmd):
+    
+
     intro = 'Welcome to the Dojo Room Allocation Application!'\
         + '(type help for a list of commands)'
     prompt = '(TheDojo)'
     file = None
+
 
     @docopt_cmd
     def do_create_room(self, arg):
@@ -92,6 +96,8 @@ class TheDojo(cmd.Cmd):
                             print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
         else:
             raise TypeError("RoomType is meant to be a string \nmain.py create_room <room_type> <room_name>...")
+
+
     @docopt_cmd
     def do_add_person(self, arg):
         """Usage: add_person <first_name> <last_name> <position> [<Y> | <N>]"""
@@ -121,6 +127,7 @@ class TheDojo(cmd.Cmd):
             else:
                 print ("\nPosition is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
     
+
     @docopt_cmd
     def do_print_room(self, arg):
         """Usage: print_room <room_name>"""
@@ -164,7 +171,42 @@ class TheDojo(cmd.Cmd):
                         print (str(x.name))
                     r += 1
                 print('---------------------------------------------')
+
+
+    @docopt_cmd
+    def do_print_unallocated(self, arg):
+        """Usage: print_unallocated [-o <filename>]"""
+        test = arg ['-o']
+        filename = arg['<filename>']
+        unallocated = dojo.get_unallocated_people()
+        if test:
+            file = open(filename, "w")
+            for i in unallocated:
+                file.write('\n'+str(i).upper()+'\n')
+                r = 1
+                for x in unallocated[i]:
+                    if r < len(unallocated[i]):
+                        file.write(str(x.name)+', ')
+                    else:
+                        file.write(str(x.name)+ '\n')
+                    r += 1
+                file.write('---------------------------------------------')
+            file.close()
+        else:
+            for i in unallocated:
+                print ('\n'+str(i).upper())
+                r = 1
+                for x in unallocated[i]:
+                    if r < len(unallocated[i]):
+                        print (str(x.name), end=', ')
+                    else:
+                        print (str(x.name))
+                    r += 1
+                print('---------------------------------------------')
     
+
+    
+
     @docopt_cmd
     def do_save_state(self, arg):
         """Usage: save_state [--db <sqlite_database>]"""
@@ -176,22 +218,26 @@ class TheDojo(cmd.Cmd):
         else:
             dojo.save_state('')
     
+
     @docopt_cmd
     def do_load_state(self, arg):
         """Usage: save_state <sqlite_database>"""
         sqlite_database = arg['<sqlite_database>']
         dojo.load_data(sqlite_database)
     
+
     @docopt_cmd
     def do_start(self, arg):
         """Usage: start"""
         pass
 
+
     def do_quit(self, arg):
         """Quit out of interactive dojo"""
         print('See ya!')
         exit()
-        
+
+
 opt = docopt(__doc__, sys.argv[1:])
 #if opt['--interactive']:
 TheDojo().cmdloop()
