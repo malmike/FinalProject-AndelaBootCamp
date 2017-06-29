@@ -162,18 +162,78 @@ class AllocationsTests(TestCase):
         self.assertFalse(non_existant_room, 'This room is not supposed to exist')
     
 
-    #Test for finding person in the various dictionaries
-    def test_get_room_assigned(self):
+    #Test for finding person in the living space dictionaries
+    def test_get_living_space_assigned(self):
         self.dojo = Dojo()
         self.create_living_space_rooms(2)
         self.create_fellows(26)
+        allocated_person = ""
         for person in self.dojo.fellow_dict:
-            self.room_allocation(self.dojo.fellow_dict[person], 'LIVINGSPACE')
+            allocated_room = self.room_allocation(self.dojo.fellow_dict[person], 'LIVINGSPACE')
+            if allocated_room:
+                allocated_person = person
         
-        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', self.fellows_names[3])
+        room_allocated = self.dojo.get_room_assigned('LIVINGSPACE', allocated_person)
         self.assertIn(
-            self.dojo.fellow_dict[person], 
-            self.dojo.living_space_dict[room_allocated], 
+            self.dojo.fellow_dict[allocated_person], 
+            self.dojo.living_space_dict[room_allocated].allocation_list, 
+            'Verify that the person was allocated to the returned room'
+        )
+    
+
+    #Test for finding person in unallocated list 
+    def test_get_living_space_unassigned(self):
+        self.dojo = Dojo()
+        self.create_living_space_rooms(2)
+        self.create_fellows(26)
+        unallocated_person = ""
+        for person in self.dojo.fellow_dict:
+            allocated_room = self.room_allocation(self.dojo.fellow_dict[person], 'LIVINGSPACE')
+            if not allocated_room:
+                unallocated_person = person
+
+        unallocated = self.dojo.get_room_assigned('LIVINGSPACE', unallocated_person)
+        self.assertIn(
+            unallocated, 
+            self.dojo.unallocated_people['LIVINGSPACE'], 
+            'Verify that the person was allocated to the returned room'
+        )
+
+
+    #Test for finding person in the living space dictionaries
+    def test_get_office_assigned(self):
+        self.dojo = Dojo()
+        self.create_office_rooms(2)
+        self.create_staff(26)
+        allocated_person = ""
+        for person in self.dojo.staff_dict:
+            allocated_room = self.room_allocation(self.dojo.staff_dict[person], 'OFFICE')
+            if allocated_room:
+                allocated_person = person
+        
+        room_allocated = self.dojo.get_room_assigned('OFFICE', allocated_person)
+        self.assertIn(
+            self.dojo.staff_dict[allocated_person], 
+            self.dojo.office_dict[room_allocated].allocation_list, 
+            'Verify that the person was allocated to the returned room'
+        )
+    
+
+    #Test for finding person in unallocated list 
+    def test_get_living_space_unassigned(self):
+        self.dojo = Dojo()
+        self.create_office_rooms(2)
+        self.create_staff(26)
+        allocated_person = ""
+        for person in self.dojo.staff_dict:
+            allocated_room = self.room_allocation(self.dojo.staff_dict[person], 'OFFICE')
+            if not allocated_room:
+                unallocated_person = person
+
+        unallocated = self.dojo.get_room_assigned('OFFICE', unallocated_person)
+        self.assertIn(
+            unallocated, 
+            self.dojo.unallocated_people['OFFICE'], 
             'Verify that the person was allocated to the returned room'
         )
 
