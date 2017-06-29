@@ -6,6 +6,7 @@
         TheDojo print_room <room_name>
         TheDojo print_allocations [-o <filename>]
         TheDojo print_unallocated [-o <filename>]
+        TheDojo reallocate_person <first_name> <last_name> <new_room_name>
         TheDojo save_state [--db <sqlite_database>]
         TheDojo save_state <sqlite_database>
         TheDojo -h | --help
@@ -76,22 +77,22 @@ class TheDojo(cmd.Cmd):
         if isinstance(room_type, str):
             room_type = room_type.upper()
             if isinstance(room_names, str):
-                value = dojo.create_room(room_type, room_name)
+                value = dojo.create_room(room_type, room_names.capitalize())
                 if value:
                     print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
                 else:
                     if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
                         print ( "\n"+room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                     else:
-                        print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
+                        print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...\n   ")
             else:
                 for room_name in room_names:
-                    value = dojo.create_room(room_type, room_name)
+                    value = dojo.create_room(room_type, room_name.capitalize())
                     if value:
-                        print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                        print ("\nAn "+ room_type.lower() +" called "+value.name.lower()+" has been successfully created!\n")
                     else:
                         if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
-                            print ( room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                            print ( "Room "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                         else:
                             print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
         else:
@@ -105,7 +106,7 @@ class TheDojo(cmd.Cmd):
         last_name = arg['<last_name>']
         position = arg['<position>']
         accomodation = arg['<Y>']
-        name = first_name+" "+ last_name
+        name = first_name.capitalize()+" "+ last_name.capitalize()
 
         person_value = dojo.add_person(position.upper(), name)
         if person_value:
@@ -142,7 +143,7 @@ class TheDojo(cmd.Cmd):
 
 
     @docopt_cmd
-    def do_print_allocation(self, arg):
+    def do_print_allocations(self, arg):
         """Usage: print_allocations [-o <filename>]"""
         test = arg ['-o']
         filename = arg['<filename>']
@@ -203,9 +204,21 @@ class TheDojo(cmd.Cmd):
                         print (str(x.name))
                     r += 1
                 print('---------------------------------------------')
-    
 
-    
+
+    @docopt_cmd
+    def do_reallocate_person(self, arg):
+        """Usage: reallocate_person <first_name> <last_name> <new_room_name>"""
+        first_name = arg['<first_name>']
+        last_name = arg['<last_name>']
+        new_room_name = arg['<new_room_name>']
+        name = first_name.capitalize()+" "+ last_name.capitalize()
+        result = dojo.reallocate_room(name, new_room_name.capitalize())
+        if isinstance(result, str):
+            print('\n'+ result +'\n')
+        else:
+            print('\n'+ name +' has been reallocated to room '+ new_room_name.lower()+'\n')
+
 
     @docopt_cmd
     def do_save_state(self, arg):
