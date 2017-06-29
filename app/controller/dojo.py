@@ -163,7 +163,7 @@ class Dojo(object):
                                 return { "person": person, "room": room }
 
                 return False
-
+                
             elif room_type.upper() == 'LIVINGSPACE':
                 for person in self.unallocated_people['LIVINGSPACE']:
                     if person.name == person_name:
@@ -222,6 +222,48 @@ class Dojo(object):
                 raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
         else:
             raise TypeError('Room Type and Room Name must be of type string')
+
+    
+    #Method to reallocate someones room
+    def reallocate_room(self, person_name, room_name):
+        if isinstance(room_name, str) and isinstance(person_name, str):
+            #Get the room type
+            room_type = self.get_room_type(room_name)
+            if room_type == 'LIVINGSPACE':
+                #Check if the room is assignable
+                if self.living_space_dict[room_name].is_room_assignable:
+                    self.reassign_room(room_type, room_name, person_name)        
+                else:
+                    raise ValueError('The room specified is not assignable')
+
+            elif room_type == 'OFFICE':
+                #Check if the room is assignable
+                if self.office_dict[room_name].is_room_assignable:
+                    self.reassign_room(room_type, room_name, person_name)
+                else:
+                    raise ValueError('The room specified is not assignable')
+
+            else:
+                raise ValueError('The room '+room_name+' does not exist')
+
+        else:
+            raise TypeError('Room Type and Person Name must be of type string')
+
+
+    #Method for reassigning room
+    def reassign_room(self, room_type, room_name, person_name):
+        #Get room individual is assigned to
+        returned_value = self.get_room_assigned(room_type, person_name)
+        if not returned_value:
+            raise ValueError('Check that the individual exists')
+        else:
+            if not returned_value['room']:
+                self.assign_individual_room(room_type, room_name, returned_value['person'])
+                return True
+            else:
+                self.unallocate_room(room_type, returned_value['room'], returned_value['person'])
+                self.assign_individual_room(room_type, room_name, returned_value['person'])
+                return True
 
 
     #Method to save the state of the data into a database
