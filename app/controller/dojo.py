@@ -185,6 +185,14 @@ class Dojo(object):
 
 
 
+    #Method to unallocate someone from a room
+    def unallocate_room(self, room_type, room_allocated, person_object):
+        if isinstance(room_type, str) and isinstance(room_allocated, str):
+            pass
+        else:
+            raise TypeError('Room Type and Room Allocated should be strings')
+
+
     #Method to save the state of the data into a database
     def save_state(self, db):
         create_schema = CreateSchema(db)
