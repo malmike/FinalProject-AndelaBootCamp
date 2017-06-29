@@ -199,3 +199,37 @@ class ReallocationsTests(TestCase):
             self.dojo.office_dict[general_computations.office_rooms_names[5]].allocation_list,
             'The room was not assigned. Check you room assignment computation'
         )
+
+    
+    #Test reallocate room
+    def test_reallocate_individual(self):
+        self.dojo = Dojo()
+        general_computations = GeneralComputations(self.dojo)
+        general_computations.create_office_rooms(10)
+        general_computations.create_staff(1)
+        specific_allocation = ""
+        room_allocated = general_computations.room_allocation(self.dojo.staff_dict[general_computations.staff_names[0]], 'OFFICE')
+        self.assertIn(
+            self.dojo.staff_dict[general_computations.staff_names[0]], 
+            self.dojo.office_dict[room_allocated].allocation_list, 
+            'Allocation failed'
+        )
+
+        if general_computations.office_rooms_names[0] == room_allocated:
+            specific_allocation = general_computations.office_rooms_names[1]
+        else:
+            specific_allocation = general_computations.office_rooms_names[0]
+
+        self.dojo.reallocate_room(general_computations.staff_names[0], specific_allocation)
+        self.assertNotIn(
+            self.dojo.staff_dict[general_computations.staff_names[0]],
+            self.dojo.office_dict[room_allocated].allocation_list,
+            'Unallocation failed'
+        )
+
+        self.assertIn(
+            self.dojo.staff_dict[general_computations.staff_names[0]],
+            self.dojo.office_dict[specific_allocation].allocation_list,
+            'Reallocation failed'
+        )
+        
