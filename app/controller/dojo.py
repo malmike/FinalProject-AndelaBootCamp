@@ -91,14 +91,14 @@ class Dojo(object):
                 index = random.choice(range(len(unallocated_rooms)))
                 value = self.office_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    return value
+                    return 'Test1'
                 else:
                     return unallocated_rooms[index]
             elif room_type == "LIVINGSPACE":
                 index = random.choice(range(len(unallocated_rooms)))
                 value = self.living_space_dict[unallocated_rooms[index]].add_person(person_object)
                 if not value:
-                    return value
+                    return 'Test1'
                 else:
                     return unallocated_rooms[index]
             else:
@@ -152,9 +152,31 @@ class Dojo(object):
     def get_room_assigned(self, room_type, person_name):
         if isinstance(room_type, str) and isinstance(person_name, str):
             if room_type.upper() == 'OFFICE':
-                pass
+                for person in self.unallocated_people['OFFICE']:
+                    if person.name == person_name:
+                        return person
+                
+                for room in self.office_dict:
+                    if self.office_dict[room].allocation_list:
+                        for person in self.office_dict[room].allocation_list:
+                            if person.name == person_name:
+                                return room
+
+                return False
             elif room_type.upper() == 'LIVINGSPACE':
-                pass
+                for person in self.unallocated_people['LIVINGSPACE']:
+                    if person.name == person_name:
+                        return person
+                
+                
+                for room in self.living_space_dict:
+                    if self.living_space_dict[room].allocation_list:
+                        for person in self.living_space_dict[room].allocation_list:
+                            if person.name == person_name:
+                                return room
+                
+                return False
+
             else:
                 raise ValueError('Room Type must either be OFFICE or LIVINGSPACE')
 
