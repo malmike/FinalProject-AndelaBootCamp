@@ -232,19 +232,20 @@ class Dojo(object):
             if room_type == 'LIVINGSPACE':
                 #Check if the room is assignable
                 if self.living_space_dict[room_name].is_room_assignable:
-                    self.reassign_room(room_type, room_name, person_name)        
+                    return self.reassign_room(room_type, room_name, person_name)        
                 else:
-                    raise ValueError('The room specified is not assignable')
+                    return 'The room specified is not assignable'
 
             elif room_type == 'OFFICE':
                 #Check if the room is assignable
                 if self.office_dict[room_name].is_room_assignable:
-                    self.reassign_room(room_type, room_name, person_name)
+                    return self.reassign_room(room_type, room_name, person_name)
+                    
                 else:
-                    raise ValueError('The room specified is not assignable')
+                    return 'The room specified is not assignable'
 
             else:
-                raise ValueError('The room '+room_name+' does not exist')
+                return 'The room '+room_name+' does not exist'
 
         else:
             raise TypeError('Room Type and Person Name must be of type string')
@@ -255,7 +256,7 @@ class Dojo(object):
         #Get room individual is assigned to
         returned_value = self.get_room_assigned(room_type, person_name)
         if not returned_value:
-            raise ValueError('Check that the individual exists')
+            return 'Check that the individual exists'
         else:
             if not returned_value['room']:
                 self.assign_individual_room(room_type, room_name, returned_value['person'])
