@@ -201,7 +201,24 @@ class Dojo(object):
     #Method to assign some one to a room
     def assign_individual_room(self, room_type, room_name, person_object):
         if isinstance(room_type, str) and isinstance(room_name, str):
-            pass
+            if room_type.upper() == 'LIVINGSPACE':
+                if not self.living_space_dict[room_name].is_room_assignable():
+                    self.unallocated_people[room_type.upper()].append(person_object)
+                    return False
+                else:
+                    value = self.living_space_dict[room_name].add_person(person_object)
+                    return value
+
+            elif room_type.upper() == 'OFFICE':
+                if not self.office_dict[room_name].is_room_assignable():
+                    self.unallocated_people[room_type.upper()].append(person_object)
+                    return False
+                else:
+                    value = self.office_dict[room_name].add_person(person_object)
+                    return value                  
+
+            else:
+                raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
         else:
             raise TypeError('Room Type and Room Name must be of type string')
 
