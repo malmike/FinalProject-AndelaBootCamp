@@ -198,6 +198,15 @@ class Dojo(object):
             raise TypeError('Room Type and Room Allocated should be strings')
 
 
+    #Method to assign some one to a room
+    def assign_individual_room(self, room_type, room_name, person_object):
+        if isinstance(room_type, str) and isinstance(room_name, str):
+            pass
+        else:
+            raise TypeError('Room Type and Room Name must be of type string')
+
+
+
     #Method to save the state of the data into a database
     def save_state(self, db):
         create_schema = CreateSchema(db)
