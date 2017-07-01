@@ -77,7 +77,7 @@ class TheDojo(cmd.Cmd):
         if isinstance(room_type, str):
             room_type = room_type.upper()
             if isinstance(room_names, str):
-                value = dojo.create_room(room_type, room_names.capitalize())
+                value = dojo.create_room(room_type, room_names.upper())
                 if value:
                     print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
                 else:
@@ -87,7 +87,7 @@ class TheDojo(cmd.Cmd):
                         print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...\n   ")
             else:
                 for room_name in room_names:
-                    value = dojo.create_room(room_type, room_name.capitalize())
+                    value = dojo.create_room(room_type, room_name.upper())
                     if value:
                         print ("\nAn "+ room_type.lower() +" called "+value.name.lower()+" has been successfully created!\n")
                     else:
@@ -106,7 +106,7 @@ class TheDojo(cmd.Cmd):
         last_name = arg['<last_name>']
         position = arg['<position>']
         accomodation = arg['<Y>']
-        name = first_name.capitalize()+" "+ last_name.capitalize()
+        name = first_name.upper()+" "+ last_name.upper()
 
         person_value = dojo.add_person(position.upper(), name)
         if person_value:
@@ -212,8 +212,8 @@ class TheDojo(cmd.Cmd):
         first_name = arg['<first_name>']
         last_name = arg['<last_name>']
         new_room_name = arg['<new_room_name>']
-        name = first_name.capitalize()+" "+ last_name.capitalize()
-        result = dojo.reallocate_room(name, new_room_name.capitalize())
+        name = first_name.upper()+" "+ last_name.upper()
+        result = dojo.reallocate_room(name, new_room_name.upper())
         if isinstance(result, str):
             print('\n'+ result +'\n')
         else:
@@ -237,12 +237,6 @@ class TheDojo(cmd.Cmd):
         """Usage: save_state <sqlite_database>"""
         sqlite_database = arg['<sqlite_database>']
         dojo.load_data(sqlite_database)
-    
-
-    @docopt_cmd
-    def do_start(self, arg):
-        """Usage: start"""
-        pass
 
 
     def do_quit(self, arg):
@@ -251,10 +245,8 @@ class TheDojo(cmd.Cmd):
         exit()
 
 
-opt = docopt(__doc__, sys.argv[1:])
-#if opt['--interactive']:
+
 TheDojo().cmdloop()
 
-print(opt)
         
         
