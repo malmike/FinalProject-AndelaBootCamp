@@ -4,6 +4,7 @@
 [![Code Health](https://landscape.io/github/malmike/FinalProject-AndelaBootCamp/master/landscape.svg?style=flat)](https://landscape.io/github/malmike/FinalProject-AndelaBootCamp/master)
 [![Code Climate](https://codeclimate.com/github/malmike/FinalProject-AndelaBootCamp/badges/gpa.svg)](https://codeclimate.com/github/malmike/FinalProject-AndelaBootCamp)
 [![Issue Count](https://codeclimate.com/github/malmike/FinalProject-AndelaBootCamp/badges/issue_count.svg)](https://codeclimate.com/github/malmike/FinalProject-AndelaBootCamp)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6249586533e041449df1f72dd0fb60d1)](https://www.codacy.com/app/malmike/FinalProject-AndelaBootCamp?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=malmike/FinalProject-AndelaBootCamp&amp;utm_campaign=Badge_Grade)
 
 This is the repository for the final project of the Andela Boot Camp
 
