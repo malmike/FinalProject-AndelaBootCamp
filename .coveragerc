@@ -3,3 +3,4 @@ source=
     ./
 omit=
     ./.venv/*
+    /home/travis/virtualenv/*
