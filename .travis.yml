@@ -1,7 +1,6 @@
 env:
   global:
     - CC_TEST_REPORTER_ID=392653690efc9e65af92588e76d5d83f4c5660d20ee402b591b7df0035b60b7d
-    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
 language: python
 python:
   - "2.7"
@@ -17,6 +16,7 @@ python:
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 # command to install dependencies
 install: 
@@ -26,6 +26,5 @@ install:
 # command to run tests
 script: 
   - coverage run run_tests.py
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build $TRAVIS_TEST_RESULT
 after_success: coveralls
