@@ -4,7 +4,6 @@ source=
 omit=
     ./.venv/*
     /home/travis/virtualenv/python2.7.9/*
-    /home/travis/virtualenv/python3.2.5/*
     /home/travis/virtualenv/python3.3.5/*
     /home/travis/virtualenv/python3.4.2/*
     /home/travis/virtualenv/python3.5.3/*
