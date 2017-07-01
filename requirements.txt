@@ -7,3 +7,4 @@ rednose==1.2.2
 six==1.10.0
 SQLAlchemy==1.1.9
 termstyle==0.1.11
+python-coveralls
