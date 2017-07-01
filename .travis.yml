@@ -25,5 +25,5 @@ install:
 script: 
   - coverage run run_tests.py
 after_success: 
-  - ./cc-test-reporter after-build --coverage-input-type .coverage --exit-code $EXIT_CODE
   - coveralls
+  - ./cc-test-reporter after-build --coverage-input-type .coverage --exit-code $EXIT_CODE
