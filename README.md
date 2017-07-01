@@ -1,4 +1,6 @@
 # FinalProject-AndelaBootCamp
+[![Build Status](https://travis-ci.org/malmike/FinalProject-AndelaBootCamp.svg?branch=master)](https://travis-ci.org/malmike/FinalProject-AndelaBootCamp)
+
 This is the repository for the final project of the Andela Boot Camp
 
 ## PROJECT DESCRIPTION
