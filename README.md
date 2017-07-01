@@ -1,6 +1,8 @@
 # FinalProject-AndelaBootCamp
 [![Build Status](https://travis-ci.org/malmike/FinalProject-AndelaBootCamp.svg?branch=master)](https://travis-ci.org/malmike/FinalProject-AndelaBootCamp)
 
+[![Coverage Status](https://coveralls.io/repos/github/malmike/FinalProject-AndelaBootCamp/badge.svg?branch=master)](https://coveralls.io/github/malmike/FinalProject-AndelaBootCamp?branch=master)
+
 This is the repository for the final project of the Andela Boot Camp
 
 ## PROJECT DESCRIPTION
