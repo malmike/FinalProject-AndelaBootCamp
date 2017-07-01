@@ -26,5 +26,5 @@ install:
 # command to run tests
 script: 
   - coverage run run_tests.py
-  - ./cc-test-reporter after-build $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --coverage-input-type coverage.py
 after_success: coveralls
