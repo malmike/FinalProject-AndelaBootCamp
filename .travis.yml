@@ -13,4 +13,4 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 # command to run tests
-script: nosetests tests/run_tests.py
+script: nosetests run_tests.py
