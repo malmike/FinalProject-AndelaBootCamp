@@ -308,5 +308,7 @@ class Dojo(object):
 
     #Method to check that the variable passed is a string type
     def check_str(self, **kwargs):
-        pass     
+        for value in kwargs:
+            if not isinstance(kwargs[value], str):
+                raise TypeError(value+' must be of type string')
         
