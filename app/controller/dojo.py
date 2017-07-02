@@ -168,7 +168,6 @@ class Dojo(object):
                     for person in self.office_dict[room].allocation_list:
                         if person.name == person_name:
                             return { "person": person, "room": room }
-
             return False    
         elif room_type.upper() == 'LIVINGSPACE':
             for person in self.unallocated_people['LIVINGSPACE']:
@@ -181,7 +180,6 @@ class Dojo(object):
                     for person in self.living_space_dict[room].allocation_list:
                         if person.name == person_name:
                             return { "person": person, "room": room }
-            
             return False
         else:
             raise ValueError('Room Type must either be OFFICE or LIVINGSPACE')     
