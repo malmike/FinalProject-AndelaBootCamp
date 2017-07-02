@@ -305,5 +305,8 @@ class Dojo(object):
             value = self.fellow_dict[str(alloc_living_space[1])]
             self.allocate_rooms(value, "LIVINGSPACE")
 
-            
+
+    #Method to check that the variable passed is a string type
+    def check_str(self, **kwargs):
+        pass     
         
