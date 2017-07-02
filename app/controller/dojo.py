@@ -24,9 +24,7 @@ class Dojo(object):
 
     #Method to create a room
     def create_room(self, room_type, room_name):
-        if not isinstance(room_type, str):
-            raise TypeError('Values inserted must both be strings')
-
+        self.check_str(RoomType=room_type, RoomName=room_name)
         #Create an office room and add it to office list
         if room_type == "OFFICE" and room_name not in self.office_dict and room_name not in self.living_space_dict:
             office = Office(room_name)
@@ -43,11 +41,8 @@ class Dojo(object):
 
 
     #Add a method to add a person
-    def add_person(self, person_type, person_name):
-        
-        if not isinstance(person_type, str):
-            raise TypeError('Values inserted must both be strings')
-
+    def add_person(self, person_type, person_name): 
+        self.check_str(PersonType=person_type, PersonName=person_name)
         #Add a fellow and add to the fellow list
         if person_type == "FELLOW" and person_name not in self.fellow_dict and person_name not in self.staff_dict:
             fellow = Fellow(person_name)
@@ -66,9 +61,7 @@ class Dojo(object):
     #Method to get unallocated rooms
     def get_unallocated_rooms(self, room_type):
         unallocated_rooms = []
-        if not isinstance(room_type, str):
-            raise TypeError('Room Type must be a string')
-
+        self.check_str(RoomType=room_type)
         #sort though the office/ living space dictionary and get unallocated rooms
         if room_type.upper() == 'OFFICE':
             for room in self.office_dict:
@@ -80,9 +73,7 @@ class Dojo(object):
                     unallocated_rooms.append(room)
         else:
             raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
-
         return unallocated_rooms
-
             
 
 
@@ -155,8 +146,7 @@ class Dojo(object):
 
     #Method to retrieve the room an individual is assigned
     def get_room_assigned(self, room_type, person_name):
-        if not isinstance(room_type, str) and not isinstance(person_name, str):
-            raise TypeError('Room Type must be a string')
+        self.check_str(RoomType=room_type, PersonName=person_name)
 
         if room_type.upper() == 'OFFICE':
             for person in self.unallocated_people['OFFICE']:
@@ -187,9 +177,7 @@ class Dojo(object):
 
     #Method to unallocate someone from a room
     def unallocate_room(self, room_type, room_allocated, person_object):
-        if not isinstance(room_type, str) and not isinstance(room_allocated, str):
-            raise TypeError('Room Type and Room Allocated should be strings')
-
+        self.check_str(RoomType=room_type, RoomAllocated=room_allocated)
         if room_type.upper() == 'LIVINGSPACE':
             self.living_space_dict[room_allocated].allocation_list.remove(person_object)
         elif room_type.upper() == 'OFFICE':
@@ -201,9 +189,7 @@ class Dojo(object):
 
     #Method to assign some one to a room
     def assign_individual_room(self, room_type, room_name, person_object):
-        if not isinstance(room_type, str) and not isinstance(room_name, str):
-            raise TypeError('Room Type and Room Name must be of type string')
-
+        self.check_str(RoomType=room_type, RoomName=room_name)
         if room_type.upper() == 'LIVINGSPACE':
             if not self.living_space_dict[room_name].is_room_assignable():
                 self.unallocated_people[room_type.upper()].append(person_object)
@@ -225,9 +211,7 @@ class Dojo(object):
     
     #Method to reallocate someones room
     def reallocate_room(self, person_name, room_name):
-        if not isinstance(room_name, str) and not isinstance(person_name, str):
-            raise TypeError('Room Type and Person Name must be of type string')
-
+        self.check_str(RoomName=room_name,PersonName=person_name)
         #Get the room type
         room_type = self.get_room_type(room_name)
         if room_type == 'LIVINGSPACE':
