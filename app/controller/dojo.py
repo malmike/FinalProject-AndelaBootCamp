@@ -213,7 +213,6 @@ class Dojo(object):
             else:
                 value = self.living_space_dict[room_name].add_person(person_object)
                 return value
-
         elif room_type.upper() == 'OFFICE':
             if not self.office_dict[room_name].is_room_assignable():
                 self.unallocated_people[room_type.upper()].append(person_object)
@@ -221,7 +220,6 @@ class Dojo(object):
             else:
                 value = self.office_dict[room_name].add_person(person_object)
                 return value                  
-
         else:
             raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
             
@@ -240,15 +238,12 @@ class Dojo(object):
                 return self.reassign_room(room_type, room_name, person_name)        
             else:
                 return 'The room specified is not assignable'
-
         elif room_type == 'OFFICE':
             #Check if the room is assignable
             if self.office_dict[room_name].is_room_assignable:
-                return self.reassign_room(room_type, room_name, person_name)
-                
+                return self.reassign_room(room_type, room_name, person_name)               
             else:
                 return 'The room specified is not assignable'
-
         else:
             return 'The room '+room_name+' does not exist'
 
