@@ -24,4 +24,9 @@ class DojoTests(TestCase):
         self.assertTrue(isinstance(dojo.fellow_dict, dict), "Class dojo doesnot contain any dictionary fellow_dict")
 
     
+    #Test check for strings
+    def test_check_str(self):
+        dojo = Dojo()
+        with self.assertRaises(TypeError):
+            dojo.check_str(RoomType=1)
     
