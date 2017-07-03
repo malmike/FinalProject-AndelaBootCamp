@@ -35,6 +35,8 @@ class Dojo(object):
         """
         self.check_str(RoomType=room_type, RoomName=room_name)
         room_exists = room_name not in self.office_dict and room_name not in self.living_space_dict
+        room_dict = self.get_dict(room_type.upper())
+
         #Create an office room and add it to office list
         if room_type == "OFFICE" and room_exists:
             office = Office(room_name)
@@ -424,25 +426,35 @@ class Dojo(object):
         return False
 
     #Method to get specific dictionary with the dojo class
-    def get_dict(self, item_category, item_type):
+    def get_dict(self, item_type):
         """
         Method returns a dictionary basing on the arguments passed
-        :param item_category
         :param item_type
         :return Dictionary
         """
-        self.check_str(ItemCategory=item_category, ItemType=item_type)
+        self.check_str(ItemType=item_type)
 
-        if item_category.upper() == "PERSON" and item_type.upper() == "STAFF":
+        if item_type.upper() == "STAFF":
             return self.staff_dict
 
-        if item_category.upper() == "PERSON" and item_type.upper() == "FELLOW":
+        if item_type.upper() == "FELLOW":
             return self.fellow_dict
 
-        if item_category.upper() == "ROOM" and item_type.upper() == "OFFICE":
+        if item_type.upper() == "OFFICE":
             return self.office_dict
 
-        if item_category.upper() == "ROOM" and item_type.upper() == "LIVINGSPACE":
+        if item_type.upper() == "LIVINGSPACE":
             return self.living_space_dict
 
         return False
+
+    #Method to create an object basing on the arguments passed
+    def create_item_object(self, item_type, item_name):
+        """
+        Method creates an object of type room or person basing on the argument
+        passed and returns the object created
+        :param item_type
+        :param item_name
+        :return Object<type 'Room'> or Object<type 'Person'> or False
+        """
+        pass
