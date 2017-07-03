@@ -212,6 +212,10 @@ class Dojo(object):
         """
         self.check_str(RoomType=room_type, PersonName=person_name)
 
+        person_object = self.get_person(person_name)
+        if not person_object:
+            return "Person does not exist"
+
         if room_type.upper() == 'LIVINGSPACE' or room_type.upper() == 'OFFICE':
             for person in self.unallocated_people[room_type.upper()]:
                 if person.name == person_name:
@@ -219,19 +223,16 @@ class Dojo(object):
 
         if room_type.upper() == 'OFFICE':
             for room in self.office_dict:
-                if self.office_dict[room].allocation_list:
-                    for person in self.office_dict[room].allocation_list:
-                        if person.name == person_name:
-                            return {"person": person, "room": room}
+                if person_object in self.office_dict[room].allocation_list:
+                    return {"person": person_object, "room": room}
             return False
 
         if room_type.upper() == 'LIVINGSPACE':
             for room in self.living_space_dict:
-                if self.living_space_dict[room].allocation_list:
-                    for person in self.living_space_dict[room].allocation_list:
-                        if person.name == person_name:
-                            return {"person": person, "room": room}
+                if person_object in self.living_space_dict[room].allocation_list:
+                    return {"person": person_object, "room": room}
             return False
+
         raise ValueError('Room Type must either be OFFICE or LIVINGSPACE')
 
 
@@ -410,6 +411,8 @@ class Dojo(object):
         :param person_name
         :return Object<type 'Person'> or Boolean
         """
+        self.check_str(PersonName=person_name)
+
         for person in self.fellow_dict:
             if person == person_name:
                 return self.fellow_dict[person]
@@ -419,3 +422,4 @@ class Dojo(object):
                 return self.staff_dict[person]
 
         return False
+    
