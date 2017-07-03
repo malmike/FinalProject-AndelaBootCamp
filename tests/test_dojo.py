@@ -1,5 +1,9 @@
 from unittest import TestCase
 from app.controller.dojo import Dojo
+from app.models.fellow import Fellow
+from app.models.staff import Staff
+from app.models.living_space import LivingSpace
+from app.models.office import Office
 from tests.general_computations import GeneralComputations
 
 class DojoTests(TestCase):
@@ -32,11 +36,11 @@ class DojoTests(TestCase):
             dojo.check_str(RoomType=1)
 
     #Test to get office dictonary when room type OFFICE is passed
-    def test_get_office_dict_(self):
+    def test_get_office_dict(self):
         dojo = Dojo()
         general_computations = GeneralComputations(dojo)
         general_computations.create_office_rooms(1)
-        office_dict = dojo.get_dict("ROOM", "OFFICE")
+        office_dict = dojo.get_dict("OFFICE")
         self.assertEqual(
             office_dict,
             dojo.office_dict,
@@ -45,11 +49,11 @@ class DojoTests(TestCase):
 
 
     #Test to get living space dictonary when room type LIVINGSPACE is passed
-    def test_get_living_space_dict_(self):
+    def test_get_living_space_dict(self):
         dojo = Dojo()
         general_computations = GeneralComputations(dojo)
         general_computations.create_living_space_rooms(1)
-        living_space_dict = dojo.get_dict("ROOM", "LIVINGSPACE")
+        living_space_dict = dojo.get_dict("LIVINGSPACE")
         self.assertEqual(
             living_space_dict,
             dojo.living_space_dict,
@@ -58,11 +62,11 @@ class DojoTests(TestCase):
 
 
     #Test to get staff dictonary when person type STAFF is passed
-    def test_get_staff_dict_(self):
+    def test_get_staff_dict(self):
         dojo = Dojo()
         general_computations = GeneralComputations(dojo)
         general_computations.create_staff(1)
-        staff_dict = dojo.get_dict("PERSON", "STAFF")
+        staff_dict = dojo.get_dict("STAFF")
         self.assertEqual(
             staff_dict,
             dojo.staff_dict,
@@ -71,13 +75,41 @@ class DojoTests(TestCase):
 
 
     #Test to get office dictonary when room type OFFICE is passed
-    def test_get_fellow_dict_(self):
+    def test_get_fellow_dict(self):
         dojo = Dojo()
         general_computations = GeneralComputations(dojo)
         general_computations.create_fellows(1)
-        fellow_dict = dojo.get_dict("PERSON", "FELLOW")
+        fellow_dict = dojo.get_dict("FELLOW")
         self.assertEqual(
             fellow_dict,
             dojo.fellow_dict,
             "Dictionary returned should be the same as the office_dict in dojo"
         )
+
+
+    #Test for the creation of office object
+    def test_create_office_object(self):
+        dojo = Dojo()
+        office_object = dojo.create_item_object("OFFICE", 'office')
+        self.assertIsInstance(office_object, Office, "An office object should be returned")
+
+
+    #Test for the creation of living space object
+    def test_create_living_space_object(self):
+        dojo = Dojo()
+        living_space_object = dojo.create_item_object("LIVINGSPACE", 'livingspace')
+        self.assertIsInstance(living_space_object, LivingSpace, "A livingspace object should be returned")
+
+
+    #Test for the creation of office object
+    def test_create_fellow_object(self):
+        dojo = Dojo()
+        fellow_object = dojo.create_item_object("FELLOW", 'fellow')
+        self.assertIsInstance(fellow_object, Fellow, "A fellow object should be returned")
+
+
+    #Test for the creation of office object
+    def test_create_staff_object(self):
+        dojo = Dojo()
+        staff_object = dojo.create_item_object("STAFF", 'staff')
+        self.assertIsInstance(staff_object, Staff, "A staff object should be returned")
