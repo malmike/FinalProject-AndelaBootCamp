@@ -122,9 +122,8 @@ class Dojo(object):
         :param
         :return Dictionary
         """
-        alloc_list = {}
-        rooms = self.get_allocations_for_room_category("OFFICE")
-        rooms.update(self.get_allocations_for_room_category("LIVINGSPACE"))
+        rooms = self.__get_allocations_for_rooms("OFFICE")
+        rooms.update(self.__get_allocations_for_rooms("LIVINGSPACE"))
         return rooms
 
     #Method to get unallocated people
@@ -429,7 +428,7 @@ class Dojo(object):
         return False
 
     #Method to get list of allocations
-    def get_allocations_for_room_category(self, room_type):
+    def __get_allocations_for_rooms(self, room_type):
         """
         Method generates a dictionary containing the room allocations based on
         the room type provided
@@ -445,5 +444,3 @@ class Dojo(object):
             for room_name in room_dict
             if room_dict[room_name].allocation_list
         }
-
-
