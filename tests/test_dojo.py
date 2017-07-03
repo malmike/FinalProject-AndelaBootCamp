@@ -113,3 +113,22 @@ class DojoTests(TestCase):
         dojo = Dojo()
         staff_object = dojo.create_item_object("STAFF", 'staff')
         self.assertIsInstance(staff_object, Staff, "A staff object should be returned")
+
+    #Test for adding return item object when added
+    def test_add_object_return_object(self):
+        dojo = Dojo()
+        fellow_dict = dojo.fellow_dict
+        fellow_object = dojo.add_object_to_dict(fellow_dict, "FELLOW", 'Male Michael')
+        self.assertIsInstance(fellow_object, Fellow)
+
+    #Test for checking that the item object is added to item dict
+    def test_add_object_to_item_dict(self):
+        dojo = Dojo()
+        dict_len = len(dojo.office_dict)
+        dojo.add_object_to_dict(dojo.office_dict, "OFFICE", 'Red')
+        new_dict_len = len(dojo.office_dict)
+        self.assertEqual(
+            new_dict_len - dict_len,
+            1,
+            "Item was not added to the item dict, Check the add_object_to_dict method"
+        )
