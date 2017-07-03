@@ -48,24 +48,6 @@ class AllocationsTests(TestCase):
         self.assertEqual(len(expected_allocations_list), len(assigned_allocations), 'List doesnot match')
 
 
-    #Test to get allocations basing on room category office
-    def test_get_allocations_for_room_category_office(self):
-        self.dojo = Dojo()
-        general_computations = GeneralComputations(self.dojo)
-        office_allocations = general_computations.assign_sample_offices('STAFF', 3, 24)["room_assignment"]
-        assigned_allocations = self.dojo.get_allocations_for_room_category("OFFICE")
-        self.assertEqual(len(assigned_allocations), len(office_allocations), "Dictionaries do not match")
-
-
-    #Test to get allocations basing on room category office
-    def test_get_allocations_for_room_category_living_space(self):
-        self.dojo = Dojo()
-        general_computations = GeneralComputations(self.dojo)
-        living_space_allocations = general_computations.assign_sample_living_space(3, 24)["room_assignment"]
-        assigned_allocations = self.dojo.get_allocations_for_room_category("LIVINGSPACE")
-        self.assertEqual(len(assigned_allocations), len(living_space_allocations), "Dictionaries do not match")
-
-
     #Test to check offices that still have unassigned places
     def test_get_unallocated_offices(self):
         self.dojo = Dojo()
