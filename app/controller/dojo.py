@@ -35,7 +35,8 @@ class Dojo(object):
         """
         self.check_str(RoomType=room_type.upper(), RoomName=room_name)
         room_dict = self.get_dict(room_type.upper())
-        room_object = self.add_object_to_dict(room_dict, room_type.upper(), room_name)
+        not_in = room_name not in self.office_dict and room_name not in self.living_space_dict
+        room_object = self.add_object_to_dict(room_dict, room_type.upper(), room_name, not_in)
         if room_object:
             return True
 
@@ -53,7 +54,8 @@ class Dojo(object):
         """
         self.check_str(PersonType=person_type.upper(), PersonName=person_name)
         person_dict = self.get_dict(person_type.upper())
-        return self.add_object_to_dict(person_dict, person_type.upper(), person_name)
+        not_in = person_name not in self.fellow_dict and person_name not in self.staff_dict
+        return self.add_object_to_dict(person_dict, person_type.upper(), person_name, not_in)
 
 
 
@@ -400,7 +402,7 @@ class Dojo(object):
 
 
     #Method to add item to dict
-    def add_object_to_dict(self, item_dict, item_type, item_name):
+    def add_object_to_dict(self, item_dict, item_type, item_name, room_not_exists):
         """
         Method creates an object based on the item type passed and adds that object
         to the dictionary that is passed as item_dict
@@ -409,15 +411,8 @@ class Dojo(object):
         :param item_name
         :return Object or False
         """
-        if item_type.upper() == "STAFF" or item_type.upper() == "FELLOW":
-            not_in = item_name not in self.fellow_dict and item_name not in self.staff_dict
-        elif item_type.upper() == "OFFICE" or item_type.upper() == "LIVINGSPACE":
-            not_in = item_name not in self.office_dict and item_name not in self.living_space_dict
-        else:
-            raise ValueError('Item category must either be ROOM or PERSON')
-
         #Add a fellow and add to the fellow list
-        if isinstance(item_dict, dict) and not_in:
+        if isinstance(item_dict, dict) and room_not_exists:
             item_object = self.create_item_object(item_type.upper(), item_name)
             if item_object:
                 item_dict[item_name] = item_object
