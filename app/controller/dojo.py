@@ -400,3 +400,14 @@ class Dojo(object):
         for value in kwargs:
             if not isinstance(kwargs[value], str):
                 raise TypeError(value+' must be of type string')
+
+
+    #Method that is used to get a person if person exists in dictionaries
+    def get_person(self, person_name):
+        """
+        Method that helps get the person object if the person name is in the
+        staff or fellow dictionary
+        :param person_name
+        :return Object<type 'Person'> or Boolean
+        """
+        pass
