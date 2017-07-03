@@ -422,4 +422,13 @@ class Dojo(object):
                 return self.staff_dict[person]
 
         return False
-    
+
+    #Method to get specific dictionary with the dojo class
+    def get_dict(self, item_category, item_type):
+        """
+        Method returns a dictionary basing on the arguments passed
+        :param item_category
+        :param item_type
+        :return Dictionary
+        """
+        pass
