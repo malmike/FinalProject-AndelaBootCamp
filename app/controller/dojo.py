@@ -34,15 +34,10 @@ class Dojo(object):
         :return: Boolean
         """
         self.check_str(RoomType=room_type.upper(), RoomName=room_name)
-        room_exists = room_name not in self.office_dict and room_name not in self.living_space_dict
         room_dict = self.get_dict(room_type.upper())
-        if isinstance(room_dict, dict) and room_exists:
-            room_object = self.create_item_object(room_type.upper(), room_name)
-            if room_object:
-                room_dict[room_name] = room_object
-                return room_object
-
-            return False
+        room_object = self.add_object_to_dict(room_dict, room_type.upper(), room_name)
+        if room_object:
+            return True
 
         return False
 
@@ -58,17 +53,7 @@ class Dojo(object):
         """
         self.check_str(PersonType=person_type.upper(), PersonName=person_name)
         person_dict = self.get_dict(person_type.upper())
-        person_exists = person_name not in self.fellow_dict and person_name not in self.staff_dict
-        #Add a fellow and add to the fellow list
-        if isinstance(person_dict, dict) and person_exists:
-            person_object = self.create_item_object(person_type.upper(), person_name)
-            if person_object:
-                person_dict[person_name] = person_object
-                return person_object
-
-            return False
-
-        return False
+        return self.add_object_to_dict(person_dict, person_type.upper(), person_name)
 
 
 
