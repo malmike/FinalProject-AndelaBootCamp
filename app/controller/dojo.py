@@ -431,4 +431,18 @@ class Dojo(object):
         :param item_type
         :return Dictionary
         """
-        pass
+        self.check_str(ItemCategory=item_category, ItemType=item_type)
+
+        if item_category.upper() == "PERSON" and item_type.upper() == "STAFF":
+            return self.staff_dict
+
+        if item_category.upper() == "PERSON" and item_type.upper() == "FELLOW":
+            return self.fellow_dict
+
+        if item_category.upper() == "ROOM" and item_type.upper() == "OFFICE":
+            return self.office_dict
+
+        if item_category.upper() == "ROOM" and item_type.upper() == "LIVINGSPACE":
+            return self.living_space_dict
+
+        return False
