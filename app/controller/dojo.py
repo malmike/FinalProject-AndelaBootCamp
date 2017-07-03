@@ -123,16 +123,33 @@ class Dojo(object):
         :return Dictionary
         """
         alloc_list = {}
-        for i in self.office_dict:
-            office_name = self.office_dict[i].name
-            if self.office_dict[i].allocation_list:
-                alloc_list[office_name] = self.office_dict[i].allocation_list
+        room_dict = self.get_dict("OFFICE")
+        rooms = {
+            room_name:
+            (room_dict[room_name].allocation_list)
+            for room_name in room_dict
+            if room_dict[room_name].allocation_list
+        }
+        room_dict = self.get_dict("LIVINGSPACE")
+        rooms.update({
+            room_name:
+            room_dict[room_name].allocation_list
+            for room_name in room_dict
+            if room_dict[room_name].allocation_list
+        })
 
-        for i in self.living_space_dict:
-            living_space_name = self.living_space_dict[i].name
-            if self.living_space_dict[i].allocation_list:
-                alloc_list[living_space_name] = self.living_space_dict[i].allocation_list
-        return alloc_list
+        return rooms
+
+        # for i in self.office_dict:
+        #     office_name = self.office_dict[i].name
+        #     if self.office_dict[i].allocation_list:
+        #         alloc_list[office_name] = self.office_dict[i].allocation_list
+
+        # for i in self.living_space_dict:
+        #     living_space_name = self.living_space_dict[i].name
+        #     if self.living_space_dict[i].allocation_list:
+        #         alloc_list[living_space_name] = self.living_space_dict[i].allocation_list
+        # return alloc_list
 
 
     #Method to get unallocated people
@@ -435,3 +452,23 @@ class Dojo(object):
             return False
 
         return False
+
+    #Method to get list of allocations
+    def get_allocations_for_room_category(self, room_type):
+        """
+        Method generates a dictionary containing the room allocations based on
+        the room type provided
+        :param room_type
+        :param room_name
+        :return dict
+        """
+        self.check_str(RoomType=room_type)
+        room_dict = self.get_dict(room_type.upper())
+        return {
+            room_name:
+            (room_dict[room_name].allocation_list)
+            for room_name in room_dict
+            if room_dict[room_name].allocation_list
+        }
+
+
