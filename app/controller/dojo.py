@@ -123,34 +123,9 @@ class Dojo(object):
         :return Dictionary
         """
         alloc_list = {}
-        room_dict = self.get_dict("OFFICE")
-        rooms = {
-            room_name:
-            (room_dict[room_name].allocation_list)
-            for room_name in room_dict
-            if room_dict[room_name].allocation_list
-        }
-        room_dict = self.get_dict("LIVINGSPACE")
-        rooms.update({
-            room_name:
-            room_dict[room_name].allocation_list
-            for room_name in room_dict
-            if room_dict[room_name].allocation_list
-        })
-
+        rooms = self.get_allocations_for_room_category("OFFICE")
+        rooms.update(self.get_allocations_for_room_category("LIVINGSPACE"))
         return rooms
-
-        # for i in self.office_dict:
-        #     office_name = self.office_dict[i].name
-        #     if self.office_dict[i].allocation_list:
-        #         alloc_list[office_name] = self.office_dict[i].allocation_list
-
-        # for i in self.living_space_dict:
-        #     living_space_name = self.living_space_dict[i].name
-        #     if self.living_space_dict[i].allocation_list:
-        #         alloc_list[living_space_name] = self.living_space_dict[i].allocation_list
-        # return alloc_list
-
 
     #Method to get unallocated people
     def get_unallocated_people(self):
