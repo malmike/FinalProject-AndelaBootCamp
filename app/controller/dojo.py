@@ -29,25 +29,20 @@ class Dojo(object):
         """
         This creates a room of either office or living space and adds it
         to office_dict or living_space_dict respectively
-        :param room_type
+        :param room_type.upper()
         :param room_name
         :return: Boolean
         """
-        self.check_str(RoomType=room_type, RoomName=room_name)
+        self.check_str(RoomType=room_type.upper(), RoomName=room_name)
         room_exists = room_name not in self.office_dict and room_name not in self.living_space_dict
         room_dict = self.get_dict(room_type.upper())
+        if isinstance(room_dict, dict) and room_exists:
+            room_object = self.create_item_object(room_type.upper(), room_name)
+            if room_object:
+                room_dict[room_name] = room_object
+                return room_object
 
-        #Create an office room and add it to office list
-        if room_type == "OFFICE" and room_exists:
-            office = Office(room_name)
-            self.office_dict[room_name] = office
-            return True
-
-        #Create livingspace room and add it to livingspace list
-        if room_type == "LIVINGSPACE" and room_exists:
-            living_space = LivingSpace(room_name)
-            self.living_space_dict[room_name] = living_space
-            return True
+            return False
 
         return False
 
@@ -55,25 +50,23 @@ class Dojo(object):
     #Add a method to add a person
     def add_person(self, person_type, person_name):
         """
-        Adds a person to staff_dict if person_type is staff or to fellow_dict
-        if fellow_type is fellow
-        :params person_type
+        Adds a person to staff_dict if person_type.upper() is staff or to fellow_dict
+        if fellow_type.upper() is fellow
+        :params person_type.upper()
         :params person_name
         :return: Object<type 'Person'> or Boolean
         """
-        self.check_str(PersonType=person_type, PersonName=person_name)
+        self.check_str(PersonType=person_type.upper(), PersonName=person_name)
+        person_dict = self.get_dict(person_type.upper())
         person_exists = person_name not in self.fellow_dict and person_name not in self.staff_dict
         #Add a fellow and add to the fellow list
-        if person_type == "FELLOW" and person_exists:
-            fellow = Fellow(person_name)
-            self.fellow_dict[person_name] = fellow
-            return fellow
+        if isinstance(person_dict, dict) and person_exists:
+            person_object = self.create_item_object(person_type.upper(), person_name)
+            if person_object:
+                person_dict[person_name] = person_object
+                return person_object
 
-        #Add a staff and add to the staff list
-        if person_type == "STAFF" and person_exists:
-            staff = Staff(person_name)
-            self.staff_dict[person_name] = staff
-            return staff
+            return False
 
         return False
 
@@ -82,12 +75,12 @@ class Dojo(object):
     #Method to get unallocated rooms
     def get_unallocated_rooms(self, room_type):
         """
-        Gets a list of unallocated rooms basing on the room_type provided
-        :param room_type
+        Gets a list of unallocated rooms basing on the room_type.upper() provided
+        :param room_type.upper()
         :return: List[]
         """
         unallocated_rooms = []
-        self.check_str(RoomType=room_type)
+        self.check_str(RoomType=room_type.upper())
         #sort though the office/ living space dictionary and get unallocated rooms
         if room_type.upper() == 'OFFICE':
             for room in self.office_dict:
@@ -109,28 +102,28 @@ class Dojo(object):
         """
         Allocates a person to a random room
         :param person_object
-        :param room_type
+        :param room_type.upper()
         :return String or Boolean
         """
-        unallocated_rooms = self.get_unallocated_rooms(room_type)
+        unallocated_rooms = self.get_unallocated_rooms(room_type.upper())
 
         if not unallocated_rooms:
             self.unallocated_people[room_type.upper()].append(person_object)
             return False
 
-        if room_type == "OFFICE":
+        if room_type.upper() == "OFFICE":
             index = choice(range(len(unallocated_rooms)))
             value = self.office_dict[unallocated_rooms[index]].add_person(person_object)
             if not value:
-                return self.allocate_rooms(person_object, room_type)
+                return self.allocate_rooms(person_object, room_type.upper())
 
             return unallocated_rooms[index]
 
-        if room_type == "LIVINGSPACE":
+        if room_type.upper() == "LIVINGSPACE":
             index = choice(range(len(unallocated_rooms)))
             value = self.living_space_dict[unallocated_rooms[index]].add_person(person_object)
             if not value:
-                return self.allocate_rooms(person_object, room_type)
+                return self.allocate_rooms(person_object, room_type.upper())
 
             return unallocated_rooms[index]
 
@@ -208,11 +201,11 @@ class Dojo(object):
         """
         Gets the room an individual is assigned to or if the individual is
         not allocated to any room
-        :param room_type
+        :param room_type.upper()
         :param person_name
         :return Dictionary
         """
-        self.check_str(RoomType=room_type, PersonName=person_name)
+        self.check_str(RoomType=room_type.upper(), PersonName=person_name)
 
         person_object = self.get_person(person_name)
         if not person_object:
@@ -242,12 +235,12 @@ class Dojo(object):
     def unallocate_room(self, room_type, room_allocated, person_object):
         """
         Removes some one from the room in which he/ she was assigned
-        :param room_type
+        :param room_type.upper()
         :param room_allocated
         :param person_object
         :return None
         """
-        self.check_str(RoomType=room_type, RoomAllocated=room_allocated)
+        self.check_str(RoomType=room_type.upper(), RoomAllocated=room_allocated)
         if room_type.upper() == 'LIVINGSPACE':
             self.living_space_dict[room_allocated].allocation_list.remove(person_object)
         elif room_type.upper() == 'OFFICE':
@@ -260,12 +253,12 @@ class Dojo(object):
     def assign_individual_room(self, room_type, room_name, person_object):
         """
         Method assigns an individual to a room that has been specified
-        :param room_type
+        :param room_type.upper()
         :param room_name
         :param person_object
         :return Boolean
         """
-        self.check_str(RoomType=room_type, RoomName=room_name)
+        self.check_str(RoomType=room_type.upper(), RoomName=room_name)
         if room_type.upper() == 'LIVINGSPACE':
             if not self.living_space_dict[room_name].is_room_assignable():
                 self.unallocated_people[room_type.upper()].append(person_object)
@@ -295,17 +288,17 @@ class Dojo(object):
         self.check_str(RoomName=room_name, PersonName=person_name)
         #Get the room type
         room_type = self.get_room_type(room_name)
-        if room_type == 'LIVINGSPACE':
+        if room_type.upper() == 'LIVINGSPACE':
             #Check if the room is assignable
             if self.living_space_dict[room_name].is_room_assignable:
-                return self.reassign_room(room_type, room_name, person_name)
+                return self.reassign_room(room_type.upper(), room_name, person_name)
 
             return 'The room specified is not assignable'
 
-        if room_type == 'OFFICE':
+        if room_type.upper() == 'OFFICE':
             #Check if the room is assignable
             if self.office_dict[room_name].is_room_assignable:
-                return self.reassign_room(room_type, room_name, person_name)
+                return self.reassign_room(room_type.upper(), room_name, person_name)
 
             return 'The room specified is not assignable'
 
@@ -316,21 +309,21 @@ class Dojo(object):
     def reassign_room(self, room_type, room_name, person_name):
         """
         Method that is used when reassigning some one to a room
-        :param room_type
+        :param room_type.upper()
         :param room_name
         :param person_name
         """
         #Get room individual is assigned to
-        returned_value = self.get_room_assigned(room_type, person_name)
+        returned_value = self.get_room_assigned(room_type.upper(), person_name)
         if not returned_value:
             return 'Check that the individual exists'
 
         if not returned_value['room']:
-            self.assign_individual_room(room_type, room_name, returned_value['person'])
+            self.assign_individual_room(room_type.upper(), room_name, returned_value['person'])
             return True
 
-        self.unallocate_room(room_type, returned_value['room'], returned_value['person'])
-        self.assign_individual_room(room_type, room_name, returned_value['person'])
+        self.unallocate_room(room_type.upper(), returned_value['room'], returned_value['person'])
+        self.assign_individual_room(room_type.upper(), room_name, returned_value['person'])
         return True
 
 
@@ -429,10 +422,10 @@ class Dojo(object):
     def get_dict(self, item_type):
         """
         Method returns a dictionary basing on the arguments passed
-        :param item_type
+        :param item_type.upper()
         :return Dictionary
         """
-        self.check_str(ItemType=item_type)
+        self.check_str(ItemType=item_type.upper())
 
         if item_type.upper() == "STAFF":
             return self.staff_dict
@@ -448,16 +441,17 @@ class Dojo(object):
 
         return False
 
+
     #Method to create an object basing on the arguments passed
     def create_item_object(self, item_type, item_name):
         """
         Method creates an object of type room or person basing on the argument
         passed and returns the object created
-        :param item_type
+        :param item_type.upper()
         :param item_name
         :return Object<type 'Room'> or Object<type 'Person'> or False
         """
-        self.check_str(ItemType=item_type, ItemName=item_name)
+        self.check_str(ItemType=item_type.upper(), ItemName=item_name)
 
         if item_type.upper() == "STAFF":
             return Staff(item_name)
@@ -470,5 +464,35 @@ class Dojo(object):
 
         if item_type.upper() == "LIVINGSPACE":
             return LivingSpace(item_name)
+
+        return False
+
+
+    #Method to add item to dict
+    def add_object_to_dict(self, item_dict, item_type, item_name):
+        """
+        Method creates an object based on the item type passed and adds that object
+        to the dictionary that is passed as item_dict
+        :param item_dict
+        :param item_type
+        :param item_name
+        :return Object or False
+        """
+        item_not_exixts = False
+        if item_type.upper() == "STAFF" or item_type.upper() == "FELLOW":
+            item_not_exists = item_name not in self.fellow_dict and item_name not in self.staff_dict
+        elif item_type.upper() == "OFFICE" or item_type.upper() == "LIVINGSPACE":
+            item_not_exists = item_name not in self.office_dict and item_name not in self.living_space_dict
+        else:
+            raise ValueError('Item category must either be ROOM or PERSON')
+
+        #Add a fellow and add to the fellow list
+        if isinstance(item_dict, dict) and item_not_exists:
+            item_object = self.create_item_object(item_type.upper(), item_name)
+            if item_object:
+                item_dict[item_name] = item_object
+                return item_object
+
+            return False
 
         return False
