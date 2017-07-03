@@ -1,5 +1,6 @@
 from unittest import TestCase
 from app.controller.dojo import Dojo
+from tests.general_computations import GeneralComputations
 
 class DojoTests(TestCase):
 
@@ -33,6 +34,8 @@ class DojoTests(TestCase):
     #Test to get office dictonary when room type OFFICE is passed
     def test_get_office_dict_(self):
         dojo = Dojo()
+        general_computations = GeneralComputations(dojo)
+        general_computations.create_office_rooms(1)
         office_dict = dojo.get_dict("ROOM", "OFFICE")
         self.assertEqual(
             office_dict,
@@ -44,6 +47,8 @@ class DojoTests(TestCase):
     #Test to get living space dictonary when room type LIVINGSPACE is passed
     def test_get_living_space_dict_(self):
         dojo = Dojo()
+        general_computations = GeneralComputations(dojo)
+        general_computations.create_living_space_rooms(1)
         living_space_dict = dojo.get_dict("ROOM", "LIVINGSPACE")
         self.assertEqual(
             living_space_dict,
@@ -55,6 +60,8 @@ class DojoTests(TestCase):
     #Test to get staff dictonary when person type STAFF is passed
     def test_get_staff_dict_(self):
         dojo = Dojo()
+        general_computations = GeneralComputations(dojo)
+        general_computations.create_staff(1)
         staff_dict = dojo.get_dict("PERSON", "STAFF")
         self.assertEqual(
             staff_dict,
@@ -66,6 +73,8 @@ class DojoTests(TestCase):
     #Test to get office dictonary when room type OFFICE is passed
     def test_get_fellow_dict_(self):
         dojo = Dojo()
+        general_computations = GeneralComputations(dojo)
+        general_computations.create_fellows(1)
         fellow_dict = dojo.get_dict("PERSON", "FELLOW")
         self.assertEqual(
             fellow_dict,
