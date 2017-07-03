@@ -457,4 +457,18 @@ class Dojo(object):
         :param item_name
         :return Object<type 'Room'> or Object<type 'Person'> or False
         """
-        pass
+        self.check_str(ItemType=item_type, ItemName=item_name)
+
+        if item_type.upper() == "STAFF":
+            return Staff(item_name)
+
+        if item_type.upper() == "FELLOW":
+            return Fellow(item_name)
+
+        if item_type.upper() == "OFFICE":
+            return Office(item_name)
+
+        if item_type.upper() == "LIVINGSPACE":
+            return LivingSpace(item_name)
+
+        return False
