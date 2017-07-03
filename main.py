@@ -61,7 +61,7 @@ def docopt_cmd(func):
     return fn
 
 class TheDojo(cmd.Cmd):
-    
+
 
     intro = 'Welcome to the Dojo Room Allocation Application!'\
         + '(type help for a list of commands)'
@@ -79,20 +79,20 @@ class TheDojo(cmd.Cmd):
             if isinstance(room_names, str):
                 value = dojo.create_room(room_type, room_names.upper())
                 if value:
-                    print ("\nAn "+ room_type.lower() +" called "+value.name+" has been successfully created!")
+                    print ("\nAn "+ room_type.lower() +" called "+room_names.lower+" has been successfully created!")
                 else:
                     if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
-                        print ( "\n"+room_type.upper() +" "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                        print ( "\nA room with room name "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                     else:
                         print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...\n   ")
             else:
                 for room_name in room_names:
                     value = dojo.create_room(room_type, room_name.upper())
                     if value:
-                        print ("\nAn "+ room_type.lower() +" called "+value.name.lower()+" has been successfully created!\n")
+                        print ("\nAn "+ room_type.lower() +" called "+room_name.lower()+" has been successfully created!\n")
                     else:
                         if room_type.upper() == "OFFICE" or room_type.upper() == "LIVINGSPACE":
-                            print ( "Room "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
+                            print ( "A room with room name "+ room_name+" already exists \ncreate_room <room_type> <room_name>...\n\n" )
                         else:
                             print ("\nRoomType is meant to be office or livingspace \main.py create_room <room_type> <room_name>...")
         else:
@@ -127,7 +127,7 @@ class TheDojo(cmd.Cmd):
                 print ( "\n"+position.capitalize() +" "+ name+" already exists \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n" )
             else:
                 print ("\nPosition is meant to be staff or fellow \nadd_person <first_name> <last_name> <position> [<Y> | <N>]\n\n")
-    
+
 
     @docopt_cmd
     def do_print_room(self, arg):
@@ -230,7 +230,7 @@ class TheDojo(cmd.Cmd):
             dojo.save_state(sqlite_database)
         else:
             dojo.save_state('')
-    
+
 
     @docopt_cmd
     def do_load_state(self, arg):
@@ -248,5 +248,4 @@ class TheDojo(cmd.Cmd):
 
 TheDojo().cmdloop()
 
-        
-        
+
