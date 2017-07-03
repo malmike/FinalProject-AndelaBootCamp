@@ -410,4 +410,12 @@ class Dojo(object):
         :param person_name
         :return Object<type 'Person'> or Boolean
         """
-        pass
+        for person in self.fellow_dict:
+            if person == person_name:
+                return self.fellow_dict[person]
+
+        for person in self.staff_dict:
+            if person == person_name:
+                return self.staff_dict[person]
+
+        return False
