@@ -66,20 +66,12 @@ class Dojo(object):
         """
         unallocated_rooms = []
         self.check_str(RoomType=room_type.upper())
-        #sort though the office/ living space dictionary and get unallocated rooms
-        if room_type.upper() == 'OFFICE':
-            for room in self.office_dict:
-                if self.office_dict[room].is_room_assignable():
-                    unallocated_rooms.append(room)
-        elif room_type.upper() == 'LIVINGSPACE':
-            for room in self.living_space_dict:
-                if self.living_space_dict[room].is_room_assignable():
-                    unallocated_rooms.append(room)
-        else:
-            raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
+        room_dict = self.get_dict(room_type.upper())
+        for room in room_dict:
+            if room_dict[room].is_room_assignable():
+                unallocated_rooms.append(room)
 
         return unallocated_rooms
-
 
 
     #Method to allocate rooms at random, it takes in a person object and room type
@@ -96,24 +88,13 @@ class Dojo(object):
             self.unallocated_people[room_type.upper()].append(person_object)
             return False
 
-        if room_type.upper() == "OFFICE":
-            index = choice(range(len(unallocated_rooms)))
-            value = self.office_dict[unallocated_rooms[index]].add_person(person_object)
-            if not value:
-                return self.allocate_rooms(person_object, room_type.upper())
+        room_dict = self.get_dict(room_type.upper())
+        index = choice(range(len(unallocated_rooms)))
+        value = room_dict[unallocated_rooms[index]].add_person(person_object)
+        if not value:
+            return self.allocate_rooms(person_object, room_type.upper())
 
-            return unallocated_rooms[index]
-
-        if room_type.upper() == "LIVINGSPACE":
-            index = choice(range(len(unallocated_rooms)))
-            value = self.living_space_dict[unallocated_rooms[index]].add_person(person_object)
-            if not value:
-                return self.allocate_rooms(person_object, room_type.upper())
-
-            return unallocated_rooms[index]
-
-        raise ValueError('Room type entered must be OFFICE or LIVINGSPACE')
-
+        return unallocated_rooms[index]
 
 
     #Method to get room occupants
@@ -123,6 +104,7 @@ class Dojo(object):
         :param room_name
         :return List[]
         """
+        self.check_str(RoomName=room_name)
         if room_name in self.office_dict:
             return self.office_dict[room_name].allocation_list
 
@@ -201,19 +183,11 @@ class Dojo(object):
                 if person.name == person_name:
                     return {"person": person, "room": None}
 
-        if room_type.upper() == 'OFFICE':
-            for room in self.office_dict:
-                if person_object in self.office_dict[room].allocation_list:
-                    return {"person": person_object, "room": room}
-            return False
-
-        if room_type.upper() == 'LIVINGSPACE':
-            for room in self.living_space_dict:
-                if person_object in self.living_space_dict[room].allocation_list:
-                    return {"person": person_object, "room": room}
-            return False
-
-        raise ValueError('Room Type must either be OFFICE or LIVINGSPACE')
+        room_dict = self.get_dict(room_type.upper())
+        for room in room_dict:
+            if person_object in room_dict[room].allocation_list:
+                return {"person": person_object, "room": room}
+        return False
 
 
     #Method to unallocate someone from a room
@@ -226,12 +200,8 @@ class Dojo(object):
         :return None
         """
         self.check_str(RoomType=room_type.upper(), RoomAllocated=room_allocated)
-        if room_type.upper() == 'LIVINGSPACE':
-            self.living_space_dict[room_allocated].allocation_list.remove(person_object)
-        elif room_type.upper() == 'OFFICE':
-            self.office_dict[room_allocated].allocation_list.remove(person_object)
-        else:
-            raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
+        room_dict = self.get_dict(room_type.upper())
+        room_dict[room_allocated].allocation_list.remove(person_object)
 
 
     #Method to assign some one to a room
@@ -244,22 +214,13 @@ class Dojo(object):
         :return Boolean
         """
         self.check_str(RoomType=room_type.upper(), RoomName=room_name)
-        if room_type.upper() == 'LIVINGSPACE':
-            if not self.living_space_dict[room_name].is_room_assignable():
-                self.unallocated_people[room_type.upper()].append(person_object)
-                return False
-            value = self.living_space_dict[room_name].add_person(person_object)
-            return value
+        room_dict = self.get_dict(room_type.upper())
+        if not room_dict[room_name].is_room_assignable():
+            self.unallocated_people[room_type.upper()].append(person_object)
+            return False
+        value = room_dict[room_name].add_person(person_object)
+        return value
 
-        if room_type.upper() == 'OFFICE':
-            if not self.office_dict[room_name].is_room_assignable():
-                self.unallocated_people[room_type.upper()].append(person_object)
-                return False
-
-            value = self.office_dict[room_name].add_person(person_object)
-            return value
-
-        raise ValueError('Room Type should be either LIVINGSPACE or OFFICE')
 
 
     #Method to reallocate someones room
@@ -273,18 +234,12 @@ class Dojo(object):
         self.check_str(RoomName=room_name, PersonName=person_name)
         #Get the room type
         room_type = self.get_room_type(room_name)
-        if room_type.upper() == 'LIVINGSPACE':
-            #Check if the room is assignable
-            if self.living_space_dict[room_name].is_room_assignable:
-                return self.reassign_room(room_type.upper(), room_name, person_name)
+        room_dict = self.get_dict(room_type.upper())
 
-            return 'The room specified is not assignable'
+        if room_dict[room_name].is_room_assignable:
+            return self.reassign_room(room_type.upper(), room_name, person_name)
 
-        if room_type.upper() == 'OFFICE':
-            #Check if the room is assignable
-            if self.office_dict[room_name].is_room_assignable:
-                return self.reassign_room(room_type.upper(), room_name, person_name)
-
+        if not room_dict[room_name].is_room_assignable:
             return 'The room specified is not assignable'
 
         return 'The room '+room_name+' does not exist'
@@ -463,16 +418,15 @@ class Dojo(object):
         :param item_name
         :return Object or False
         """
-        item_not_exixts = False
         if item_type.upper() == "STAFF" or item_type.upper() == "FELLOW":
-            item_not_exists = item_name not in self.fellow_dict and item_name not in self.staff_dict
+            not_in = item_name not in self.fellow_dict and item_name not in self.staff_dict
         elif item_type.upper() == "OFFICE" or item_type.upper() == "LIVINGSPACE":
-            item_not_exists = item_name not in self.office_dict and item_name not in self.living_space_dict
+            not_in = item_name not in self.office_dict and item_name not in self.living_space_dict
         else:
             raise ValueError('Item category must either be ROOM or PERSON')
 
         #Add a fellow and add to the fellow list
-        if isinstance(item_dict, dict) and item_not_exists:
+        if isinstance(item_dict, dict) and not_in:
             item_object = self.create_item_object(item_type.upper(), item_name)
             if item_object:
                 item_dict[item_name] = item_object
