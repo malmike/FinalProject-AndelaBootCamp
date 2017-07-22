@@ -40,4 +40,4 @@ suite.addTest(unittest.TestLoader().loadTestsFromTestCase(
     test_db.DatabaseTest
 ))
 
-unittest.TextTestRunner(verbosity=2).run(suite)
+unittest.TextTestRunner(verbosity=1).run(suite)
